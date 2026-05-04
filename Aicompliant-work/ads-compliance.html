@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="nl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ads compliance — AIChecked.nl</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Fraunces:opsz,wght,SOFT@9..144,300..700,0..100&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.v2.css" />
+    <link rel="stylesheet" href="subpages.css" />
+    <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" crossorigin="anonymous"></script>
+  </head>
+  <body class="page-dark">
+    <div id="root"></div>
+    <script type="text/babel" src="components/Shared.jsx"></script>
+    <script type="text/babel">
+      const page = {
+        eyebrow: "Ads compliance",
+        title: "Ads die converteren — zonder afkeuringen",
+        sub: "Wij optimaliseren je advertenties en zorgen dat alles voldoet aan EU-regels rond data, claims en AI.",
+        problem: "De meeste bedrijven verliezen omzet door te hoge CPA’s, zwakke creatives en advertenties die niet scherp genoeg zijn opgebouwd. Daarnaast voldoen veel setups niet aan de nieuwste regels, wat kan leiden tot afkeuringen of risico’s.",
+      };
+      const crossLinks = [
+        { label: "Email marketing", href: "email-marketing-compliance.html" },
+        { label: "Ads", href: "ads-compliance.html" },
+        { label: "Website", href: "website-compliance.html" },
+      ];
+      function CrossLinks() {
+        return <div className="service-cross-links">{crossLinks.map((item) => <a key={item.href} className="service-cross-link" href={item.href}><strong>{item.label}</strong><span>Openen →</span></a>)}</div>;
+      }
+      function Page() {
+        return <>
+          <SharedHeader />
+          <section className="subpage-hero compact"><div className="grid-bg" /><div className="container"><span className="eyebrow on-dark">{page.eyebrow}</span><h1>{page.title}</h1><p className="lead-on-dark">{page.sub}</p><div style={{ display: "flex", gap: 12, flexWrap: "wrap", marginTop: 28 }}><a className="btn btn-on-dark" href="contact.html">Start analyse <span className="arrow">→</span></a><a className="btn btn-on-dark btn-secondary" href="contact.html">Plan call</a></div></div></section>
+          <section className="service-template-section"><div className="container">
+            <div className="service-template-grid">
+              <div className="service-stack">
+                <article className="service-panel"><h3>Het probleem</h3><p>{page.problem}</p></article>
+                <article className="service-panel"><h3>Wat wij doen</h3><ul><li>We analyseren je huidige setup</li><li>We optimaliseren voor conversie</li><li>We checken en verbeteren compliance</li></ul></article>
+                <article className="service-panel"><h3>Wat je krijgt</h3><ul><li>Concrete output</li><li>Compliance check</li><li>Verbeterde versies</li><li>Direct toepasbaar</li></ul></article>
+              </div>
+              <aside className="service-visual">
+                <div className="service-visual-header"><strong>Focus: claims, approval en rendement</strong><span>Voorbeeldweergave</span></div>
+                <div className="service-metric-grid">
+                  <div className="service-metric"><strong>Creatives</strong><span>We sturen op scherpere hooks, minder ruis en betere aansluiting op beleid.</span></div>
+                  <div className="service-metric"><strong>Claims</strong><span>Advertentieteksten en visuals worden nagekeken op misleiding en risico.</span></div>
+                  <div className="service-metric"><strong>Data</strong><span>Campagnedata wordt betrouwbaarder door betere consent en trackinglogica.</span></div>
+                  <div className="service-metric"><strong>Approval</strong><span>Minder frictie bij platform review en duidelijkere onderbouwing van keuzes.</span></div>
+                </div>
+              </aside>
+            </div>
+            <div className="service-template-grid" style={{ marginTop: 18 }}>
+              <article className="service-panel"><h3>Resultaat</h3><ul><li>Meer omzet</li><li>Minder risico</li><li>Minder gedoe</li></ul></article>
+              <article className="service-panel"><h3>Compliance blok</h3><div className="service-check-grid"><div className="service-check-card"><strong>Claims</strong><span>Gecheckt op misleidende claims</span></div><div className="service-check-card"><strong>Approval</strong><span>Geoptimaliseerd voor platform approval</span></div><div className="service-check-card"><strong>Richtlijnen</strong><span>In lijn met EU-richtlijnen</span></div><div className="service-check-card"><strong>AI output</strong><span>Extra gecontroleerd waar AI versnelling fouten minder zichtbaar maakt</span></div></div></article>
+            </div>
+            <div className="service-template-grid" style={{ marginTop: 18 }}>
+              <article className="service-cta-block"><strong>Laat ons dit voor je fixen</strong><p>Start vanaf €99/m. Wij combineren AI, marketing en compliance in één systeem dat jouw groei versnelt zonder risico.</p><div style={{ display: "flex", gap: 12, flexWrap: "wrap", marginTop: 22 }}><a className="btn btn-on-dark" href="contact.html">Laat dit uitvoeren <span className="arrow">→</span></a><a className="btn btn-on-dark btn-secondary" href="aanbod.html">Terug naar aanbod</a></div></article>
+              <article className="service-panel"><h3>Ook relevant voor jou</h3><CrossLinks /></article>
+            </div>
+          </div></section>
+          <SharedFooter />
+        </>;
+      }
+      ReactDOM.createRoot(document.getElementById("root")).render(<Page />);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="nl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Compliance — AIChecked.nl</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Fraunces:opsz,wght,SOFT@9..144,300..700,0..100&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.v2.css" />
+    <link rel="stylesheet" href="subpages.css" />
+    <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" crossorigin="anonymous"></script>
+  </head>
+  <body class="page-dark">
+    <div id="root"></div>
+    <script type="text/babel" src="components/Shared.jsx"></script>
+    <script type="text/babel">
+      const page = {
+        label: "AI COMPLIANCE",
+        titleTop: "Eén fout en",
+        titleAccent: "je krijgt een boete.",
+        sub: "Ik zorg dat je cookie banner, tracking en privacy statement juridisch kloppen.",
+        symptoms: [
+          "Cookie banner mist categorieën of werkt niet",
+          "Privacy statement is verouderd",
+          "Tracking respecteert geen consent",
+        ],
+        steps: [
+          ["01", "Scan van huidige compliance status", "We brengen snel boven tafel waar je website, tracking en privacylaag uit lijn lopen."],
+          ["02", "Problemen in kaart brengen met prioriteit", "Je ziet meteen wat eerst moet gebeuren en wat daarna pas belangrijk wordt."],
+          ["03", "Alles technisch en juridisch fixen", "Ik pas aan wat nodig is zodat consent, tracking en documentatie weer logisch staan."],
+          ["04", "Maandelijks controleren op nieuwe regels", "Omdat regels en tools schuiven, blijf ik kijken of alles nog klopt."],
+        ],
+        results: [
+          "Juridisch correcte cookie en tracking setup",
+          "Privacy statement die klopt",
+          "Geen boetes of handhaving",
+        ],
+      };
+
+      function Page() {
+        return (
+          <>
+            <SharedHeader />
+            <section className="subpage-hero compact">
+              <div className="grid-bg" />
+              <div className="container">
+                <span className="eyebrow on-dark">{page.label}</span>
+                <h1>
+                  <span className="hero-line-plain">{page.titleTop}</span>
+                  <span className="hero-line-accent">{page.titleAccent}</span>
+                </h1>
+                <p className="lead-on-dark">{page.sub}</p>
+              </div>
+            </section>
+            <section className="service-detail-section">
+              <div className="container">
+                <div className="service-tier-section">
+                  <div className="service-template-head">
+                    <span className="eyebrow on-dark">Wat er misgaat</span>
+                    <h2>Herken je dit?</h2>
+                  </div>
+                  <div className="service-symptom-grid">
+                    {page.symptoms.map((item) => (
+                      <article key={item} className="service-symptom-card">
+                        <strong>{item}</strong>
+                        <p>Dit lijkt vaak klein, maar raakt direct aan toestemming, privacy en hoe veilig je marketingfundament werkelijk is.</p>
+                      </article>
+                    ))}
+                  </div>
+                </div>
+                <div className="service-tier-section">
+                  <div className="service-template-head">
+                    <span className="eyebrow on-dark">Hoe ik het oplos</span>
+                    <h2>
+                      <span className="hero-line-plain">Wat ik</span>
+                      <span className="hero-line-accent">concreet doe.</span>
+                    </h2>
+                  </div>
+                  <div className="service-steps-row">
+                    {page.steps.map(([n, title, desc]) => (
+                      <article key={n} className="service-step">
+                        <span className="service-step-num">{n}</span>
+                        <h3>{title}</h3>
+                        <p>{desc}</p>
+                      </article>
+                    ))}
+                  </div>
+                </div>
+                <div className="service-tier-section">
+                  <div className="service-template-head">
+                    <span className="eyebrow on-dark">Wat je krijgt</span>
+                    <h2>
+                      <span className="hero-line-plain">Na de fix</span>
+                      <span className="hero-line-accent">klopt het weer.</span>
+                    </h2>
+                  </div>
+                  <div className="service-results-grid">
+                    {page.results.map((item) => (
+                      <article key={item} className="service-result-card">
+                        <strong>{item}</strong>
+                        <p>Je marketingfundament wordt rustiger, veiliger en een stuk minder kwetsbaar voor fouten die stil ontstaan.</p>
+                      </article>
+                    ))}
+                  </div>
+                </div>
+                <div className="service-tier-section">
+                  <article className="service-cta-panel">
+                    <span className="eyebrow on-dark">Maak kennis</span>
+                    <h2>
+                      <span className="hero-line-plain">Klaar om dit</span>
+                      <span className="hero-line-accent">op te lossen?</span>
+                    </h2>
+                    <p>Als je niet zeker weet of consent, tracking en privacy nog kloppen, is dit het eerste stuk dat recht moet staan.</p>
+                    <div className="actions">
+                      <a className="btn btn-on-dark" href="https://calendar.google.com/calendar/appointments/schedules/AcZssZ1SPBgmZQ1XSYWQRkGAxUaSpRVhIIaFPBxq1EmTwHjVCdk_vOJT3Lloz3YUtpWrLd0rG-HTEPMS">Plan een gesprek →</a>
+                      <a className="btn btn-on-dark btn-secondary" href="mailto:info@aichecked.nl">Stuur een bericht</a>
+                    </div>
+                  </article>
+                </div>
+              </div>
+            </section>
+            <CalendarBookingBlock eyebrow="START MET EEN GRATIS SCAN" />
+            <SharedFooter />
+          </>
+        );
+      }
+
+      ReactDOM.createRoot(document.getElementById("root")).render(<Page />);
+    </script>
+  </body>
+</html>

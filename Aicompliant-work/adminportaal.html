@@ -1,0 +1,950 @@
+<!doctype html>
+<html lang="nl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Adminportaal — AIChecked.nl</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Fraunces:opsz,wght,SOFT@9..144,300..700,0..100&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.v2.css" />
+    <link rel="stylesheet" href="subpages.css" />
+    <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" crossorigin="anonymous"></script>
+  </head>
+  <body class="page-dark">
+    <div id="root"></div>
+    <script type="text/babel" src="components/Shared.jsx"></script>
+    <script type="text/babel">
+      const CLIENTS_KEY = "aichecked_clients_v1";
+      const ADMIN_SESSION_KEY = "aichecked_admin_session_v1";
+      const moduleMeta = {
+        email: { label: "E-mail marketing" },
+        seo: { label: "SEO" },
+        ads: { label: "Advertenties" },
+        compliance: { label: "AI Compliance" },
+        website: { label: "Website" },
+        files: { label: "Bestanden" },
+      };
+      const serviceModuleKeys = ["ads", "compliance", "email", "seo", "website"];
+
+      const metricIcons = [
+        { value: "", label: "Geen" },
+        { value: "💰", label: "💰 Omzet" },
+        { value: "📧", label: "📧 E-mail" },
+        { value: "⚡", label: "⚡ Flows" },
+        { value: "👆", label: "👆 Clicks" },
+        { value: "📈", label: "📈 Groei" },
+        { value: "✅", label: "✅ Compliance" },
+        { value: "📋", label: "📋 Taken" },
+        { value: "👁️", label: "👁️ Bereik" },
+        { value: "🎯", label: "🎯 Resultaat" },
+        { value: "🛡️", label: "🛡️ Compliance score" },
+        { value: "🔧", label: "🔧 Fixes" },
+        { value: "⚠️", label: "⚠️ Risico's" },
+      ];
+
+      const metricTemplates = {
+        email: [
+          { label: "VERSTUURDE MAILS", value: "", icon: "📧", placeholder: "bijv. 12.4k" },
+          { label: "GEGENEREERDE OMZET", value: "", icon: "💰", placeholder: "bijv. €3.2k" },
+          { label: "COMPLIANCE STATUS", value: "", icon: "✅", placeholder: "bijv. 92%" },
+          { label: "ACTIEVE FLOWS", value: "", icon: "⚡", placeholder: "bijv. 6" },
+        ],
+        seo: [
+          { label: "ORGANISCH BEREIK", value: "", icon: "👁️", placeholder: "bijv. 8.2k" },
+          { label: "POSITIES GESTEGEN", value: "", icon: "📈", placeholder: "bijv. 14" },
+          { label: "COMPLIANCE STATUS", value: "", icon: "✅", placeholder: "bijv. 88%" },
+          { label: "TAKEN OPEN", value: "", icon: "📋", placeholder: "bijv. 2 open" },
+        ],
+        ads: [
+          { label: "AD SPEND", value: "", icon: "💰", placeholder: "bijv. €4.2k" },
+          { label: "ROAS", value: "", icon: "🎯", placeholder: "bijv. 3.4x" },
+          { label: "COMPLIANCE STATUS", value: "", icon: "✅", placeholder: "bijv. 95%" },
+          { label: "ACTIEVE CAMPAGNES", value: "", icon: "📋", placeholder: "bijv. 5" },
+        ],
+        compliance: [
+          { label: "COMPLIANCE SCORE", value: "", icon: "🛡️", placeholder: "bijv. 94%" },
+          { label: "FIXES DEZE MAAND", value: "", icon: "🔧", placeholder: "bijv. 18" },
+          { label: "OPEN RISICO'S", value: "", icon: "⚠️", placeholder: "bijv. 2 open" },
+          { label: "CHECKS UITGEVOERD", value: "", icon: "📋", placeholder: "bijv. 47" },
+        ],
+        empty: [
+          { label: "", value: "", icon: "", placeholder: "Vul in..." },
+          { label: "", value: "", icon: "", placeholder: "Vul in..." },
+          { label: "", value: "", icon: "", placeholder: "Vul in..." },
+          { label: "", value: "", icon: "", placeholder: "Vul in..." },
+        ],
+      };
+
+      function getActiveServiceModules(client) {
+        return serviceModuleKeys
+          .filter((key) => client.modules?.[key])
+          .sort((a, b) => moduleMeta[a].label.localeCompare(moduleMeta[b].label, "nl"));
+      }
+
+      function normalizeModuleMetrics(source) {
+        return (source || metricTemplates.empty).slice(0, 4).map((metric) => ({
+          label: metric.label || "",
+          value: metric.value || "",
+          icon: metric.icon || "",
+          placeholder: metric.placeholder || "Vul in...",
+        }));
+      }
+
+      function createMetricsByModule(baseMetrics = null) {
+        return {
+          email: normalizeModuleMetrics(baseMetrics),
+          seo: normalizeModuleMetrics(),
+          ads: normalizeModuleMetrics(),
+          compliance: normalizeModuleMetrics(),
+          website: normalizeModuleMetrics(),
+        };
+      }
+
+      const seedClients = [
+        {
+          id: "forcemagneten",
+          company: "Forcemagneten",
+          login: { email: "forcemagneten@client.aichecked.nl", password: "Forcemagneten2026!" },
+          modules: { email: true, seo: false, ads: false, compliance: false, website: false, files: false },
+          notes: ["Focus op e-mailretentie en compliance in flows."],
+          files: ["audit-email-q2.pdf"],
+          projectStatus: { email: "In behandeling" },
+          notifications: [],
+          primaryModule: "email",
+          metricsByModule: {
+            email: normalizeModuleMetrics(metricTemplates.email),
+            seo: normalizeModuleMetrics(),
+            ads: normalizeModuleMetrics(),
+            compliance: normalizeModuleMetrics(),
+            website: normalizeModuleMetrics(),
+          },
+        },
+        {
+          id: "studiomova",
+          company: "Studio Mova",
+          login: { email: "studiomova@client.aichecked.nl", password: "StudioMova2026!" },
+          modules: { email: true, seo: true, ads: true, compliance: true, website: true, files: true },
+          notes: ["Full package met monitoring over alle lagen."],
+          files: ["site-audit.pdf", "ads-review.pdf", "consent-export.csv"],
+          projectStatus: { email: "Afgerond", seo: "Open", ads: "In behandeling", website: "In behandeling", files: "Actief" },
+          notifications: [],
+          primaryModule: "compliance",
+          metricsByModule: {
+            email: normalizeModuleMetrics(metricTemplates.email),
+            seo: normalizeModuleMetrics(metricTemplates.seo),
+            ads: normalizeModuleMetrics(metricTemplates.ads),
+            compliance: normalizeModuleMetrics(metricTemplates.compliance),
+            website: normalizeModuleMetrics(),
+          },
+        },
+        {
+          id: "novapets",
+          company: "Nova Pets",
+          login: { email: "novapets@client.aichecked.nl", password: "NovaPets2026!" },
+          modules: { email: true, seo: false, ads: true, compliance: false, website: false, files: true },
+          notes: ["Ads en e-mail als groeilijn, documenten in portal."],
+          files: ["creative-review.pdf"],
+          projectStatus: { email: "Open", ads: "In behandeling", files: "Actief" },
+          notifications: [],
+          primaryModule: "ads",
+          metricsByModule: {
+            email: normalizeModuleMetrics(metricTemplates.email),
+            seo: normalizeModuleMetrics(),
+            ads: normalizeModuleMetrics(metricTemplates.ads),
+            compliance: normalizeModuleMetrics(),
+            website: normalizeModuleMetrics(),
+          },
+        },
+      ];
+
+      function loadClients() {
+        const stored = localStorage.getItem(CLIENTS_KEY);
+        if (!stored) {
+          localStorage.setItem(CLIENTS_KEY, JSON.stringify(seedClients));
+          return seedClients;
+        }
+        try {
+          return JSON.parse(stored).map((client) => {
+            const seed = seedClients.find((item) => item.id === client.id);
+            return {
+              ...client,
+              modules: { compliance: false, ...client.modules },
+              login: client.login || seed?.login || { email: "", password: "" },
+              notifications: client.notifications || [],
+              metricsByModule: (() => {
+                if (client.metricsByModule) {
+                  return {
+                    email: normalizeModuleMetrics(client.metricsByModule.email),
+                    seo: normalizeModuleMetrics(client.metricsByModule.seo),
+                    ads: normalizeModuleMetrics(client.metricsByModule.ads),
+                    compliance: normalizeModuleMetrics(client.metricsByModule.compliance),
+                    website: normalizeModuleMetrics(client.metricsByModule.website),
+                  };
+                }
+                const firstModule = getActiveServiceModules({ modules: { compliance: false, ...client.modules } })[0] || "email";
+                const migrated = createMetricsByModule();
+                migrated[firstModule] = normalizeModuleMetrics(client.metrics || seed?.metrics || metricTemplates.empty);
+                return migrated;
+              })(),
+              primaryModule: (() => {
+                const modules = getActiveServiceModules({ modules: { compliance: false, ...client.modules } });
+                if (client.primaryModule && modules.includes(client.primaryModule)) return client.primaryModule;
+                return modules[0] || "email";
+              })(),
+            };
+          });
+        } catch {
+          localStorage.setItem(CLIENTS_KEY, JSON.stringify(seedClients));
+          return seedClients;
+        }
+      }
+
+      function saveClients(clients) {
+        localStorage.setItem(CLIENTS_KEY, JSON.stringify(clients));
+      }
+
+      function AdminHeader({ currentClientName, onLogout }) {
+        return (
+          <header className="site-header">
+            <div className="container inner">
+              <a className="brand" href="index.html">
+                <span className="brand-dot" aria-hidden="true"></span>
+                <span><b>AIChecked</b><span className="tld">.nl</span></span>
+              </a>
+              <nav className="nav">
+                <a href="aanbod.html">Aanbod</a>
+                <a href="cases.html">Cases</a>
+                <a href="ai-kennisbank.html">AI Kennisbank</a>
+                <a href="adminportaal.html" style={{ color: "var(--text-on-paper)" }}>Adminportaal</a>
+                <button className="portal portal-button" onClick={onLogout}>Uitloggen</button>
+              </nav>
+            </div>
+            <div className="portal-topbar">
+              <div className="portal-topbar__inner container">
+                <div>
+                  <span className="portal-mini-label">Admin omgeving</span>
+                  <strong>{currentClientName}</strong>
+                </div>
+                <a className="portal-admin-link" href="klantportaal.html">Klantportaal →</a>
+              </div>
+            </div>
+          </header>
+        );
+      }
+
+      function AdminLogin({ adminEmail, setAdminEmail, adminPassword, setAdminPassword, error, onLogin }) {
+        return (
+          <>
+            <SharedHeader />
+            <section className="subpage-hero compact">
+              <div className="grid-bg" />
+              <div className="container">
+                <span className="eyebrow on-dark">Admin login</span>
+                <h1>Beheer klanten, modules en dossierstatus vanaf één plek.</h1>
+                <p className="lead-on-dark">
+                  Log in als admin om klantomgevingen te beheren. Klanten gebruiken een apart portaal zonder admin-controls.
+                </p>
+              </div>
+            </section>
+            <section className="portal-v2-section">
+              <div className="container">
+                <div className="portal-login-shell portal-login-shell--single">
+                  <article className="portal-card portal-login-card">
+                    <div className="portal-card__head">
+                      <div>
+                        <span className="feed-eyebrow">Adminportaal</span>
+                        <h3>Inloggen als admin</h3>
+                      </div>
+                    </div>
+                    <div className="auth-brand">AIChecked Admin</div>
+                    <form className="auth-form" onSubmit={(e) => { e.preventDefault(); onLogin(); }}>
+                      <label className="auth-field">
+                        <span>E-mailadres</span>
+                        <input type="email" value={adminEmail} onChange={(e) => setAdminEmail(e.target.value)} placeholder="u@bedrijf.nl" />
+                      </label>
+                      <label className="auth-field">
+                        <span>Wachtwoord</span>
+                        <input type="password" value={adminPassword} onChange={(e) => setAdminPassword(e.target.value)} placeholder="••••••••" />
+                      </label>
+                      {error ? <div className="auth-error">{error}</div> : null}
+                      <button className="auth-submit" type="submit">Inloggen →</button>
+                    </form>
+                  </article>
+                </div>
+              </div>
+            </section>
+            <SharedFooter />
+          </>
+        );
+      }
+
+      function Page() {
+        const [clients, setClients] = React.useState(loadClients);
+        const [session, setSession] = React.useState(localStorage.getItem(ADMIN_SESSION_KEY) === "true");
+        const [currentClientId, setCurrentClientId] = React.useState(clients[0]?.id || "");
+        const [newClientName, setNewClientName] = React.useState("");
+        const [notesDraft, setNotesDraft] = React.useState("");
+        const [adminEmail, setAdminEmail] = React.useState("");
+        const [adminPassword, setAdminPassword] = React.useState("");
+        const [error, setError] = React.useState("");
+        const [loginForm, setLoginForm] = React.useState({ email: "", password: "", confirm: "" });
+        const [showPassword, setShowPassword] = React.useState(false);
+        const [showConfirm, setShowConfirm] = React.useState(false);
+        const [loginFeedback, setLoginFeedback] = React.useState({ type: "", text: "" });
+        const [noticeForm, setNoticeForm] = React.useState({ type: "actie", title: "", body: "", tags: "", cta: "", status: "Open" });
+        const [noticeFeedback, setNoticeFeedback] = React.useState("");
+        const [metricTemplatesByModule, setMetricTemplatesByModule] = React.useState({});
+        const [metricsFormsByModule, setMetricsFormsByModule] = React.useState({});
+        const [metricsFeedbackByModule, setMetricsFeedbackByModule] = React.useState({});
+        const [openMetricBlocks, setOpenMetricBlocks] = React.useState({});
+
+        React.useEffect(() => {
+          saveClients(clients);
+        }, [clients]);
+
+        if (!session) {
+          return (
+            <AdminLogin
+              adminEmail={adminEmail}
+              setAdminEmail={setAdminEmail}
+              adminPassword={adminPassword}
+              setAdminPassword={setAdminPassword}
+              error={error}
+              onLogin={() => {
+                if (!adminEmail.trim() || !adminPassword.trim()) {
+                  setError("Vul een e-mailadres en wachtwoord in.");
+                  return;
+                }
+                localStorage.setItem(ADMIN_SESSION_KEY, "true");
+                setSession(true);
+                setError("");
+              }}
+            />
+          );
+        }
+
+        const currentClient = clients.find((client) => client.id === currentClientId) || clients[0];
+
+        React.useEffect(() => {
+          if (!currentClient) return;
+          setLoginForm({
+            email: currentClient.login?.email || "",
+            password: currentClient.login?.password || "",
+            confirm: currentClient.login?.password || "",
+          });
+          setLoginFeedback({ type: "", text: "" });
+          setNoticeFeedback("");
+          setNoticeForm({ type: "actie", title: "", body: "", tags: "", cta: "", status: "Open" });
+          const activeModules = getActiveServiceModules(currentClient);
+          const metricsByModule = currentClient.metricsByModule || createMetricsByModule();
+          setMetricTemplatesByModule(
+            activeModules.reduce((acc, key) => ({ ...acc, [key]: "" }), {})
+          );
+          setMetricsFeedbackByModule(
+            activeModules.reduce((acc, key) => ({ ...acc, [key]: "" }), {})
+          );
+          setOpenMetricBlocks(
+            activeModules.reduce((acc, key, index) => ({ ...acc, [key]: index === 0 }), {})
+          );
+          setMetricsFormsByModule(
+            serviceModuleKeys.reduce((acc, key) => ({
+              ...acc,
+              [key]: normalizeModuleMetrics(metricsByModule[key]),
+            }), {})
+          );
+        }, [currentClientId]);
+
+        function updateModuleToggle(moduleKey) {
+          setClients((prev) =>
+            prev.map((client) =>
+              client.id === currentClientId
+                ? (() => {
+                    const nextModules = { ...client.modules, [moduleKey]: !client.modules[moduleKey] };
+                    const activeModules = getActiveServiceModules({ modules: nextModules });
+                    return {
+                      ...client,
+                      modules: nextModules,
+                      primaryModule: activeModules.includes(client.primaryModule) ? client.primaryModule : (activeModules[0] || "email"),
+                    };
+                  })()
+                : client
+            )
+          );
+        }
+
+        function addClient() {
+          if (!newClientName.trim()) return;
+          const slug = newClientName.trim().toLowerCase().replace(/\s+/g, "-");
+          const newClient = {
+            id: slug,
+            company: newClientName.trim(),
+            login: { email: `${slug}@client.aichecked.nl`, password: "welkom123" },
+            modules: { email: true, seo: false, ads: false, compliance: false, website: false, files: false },
+            notes: [],
+            files: [],
+            projectStatus: { email: "Open" },
+            notifications: [],
+            primaryModule: "email",
+            metricsByModule: createMetricsByModule(metricTemplates.empty),
+          };
+          setClients((prev) => [...prev, newClient]);
+          setCurrentClientId(slug);
+          setNewClientName("");
+        }
+
+        function uploadFile(event) {
+          const selected = Array.from(event.target.files || []).map((file) => file.name);
+          if (!selected.length) return;
+          setClients((prev) =>
+            prev.map((client) =>
+              client.id === currentClientId
+                ? { ...client, files: [...client.files, ...selected] }
+                : client
+            )
+          );
+          event.target.value = "";
+        }
+
+        function saveNote() {
+          if (!notesDraft.trim()) return;
+          setClients((prev) =>
+            prev.map((client) =>
+              client.id === currentClientId
+                ? { ...client, notes: [notesDraft.trim(), ...client.notes] }
+                : client
+            )
+          );
+          setNotesDraft("");
+        }
+
+        function updateProjectStatus(moduleKey, status) {
+          setClients((prev) =>
+            prev.map((client) =>
+              client.id === currentClientId
+                ? { ...client, projectStatus: { ...client.projectStatus, [moduleKey]: status } }
+                : client
+            )
+          );
+        }
+
+        function updateCompanyName(name) {
+          setClients((prev) =>
+            prev.map((client) =>
+              client.id === currentClientId
+                ? { ...client, company: name }
+                : client
+            )
+          );
+        }
+
+        function saveLoginCredentials() {
+          if (!loginForm.email.trim() || !loginForm.password.trim()) {
+            setLoginFeedback({ type: "error", text: "Vul een e-mailadres en wachtwoord in" });
+            return;
+          }
+          if (loginForm.password !== loginForm.confirm) {
+            setLoginFeedback({ type: "error", text: "Wachtwoorden komen niet overeen" });
+            return;
+          }
+          setClients((prev) =>
+            prev.map((client) =>
+              client.id === currentClientId
+                ? { ...client, login: { email: loginForm.email.trim(), password: loginForm.password } }
+                : client
+            )
+          );
+          setLoginFeedback({ type: "success", text: "✓ Opgeslagen" });
+        }
+
+        function sendNotification() {
+          if (!noticeForm.title.trim() || !noticeForm.body.trim()) return;
+          const notification = {
+            id: `note-${Date.now()}`,
+            type: noticeForm.type,
+            title: noticeForm.title.trim(),
+            body: noticeForm.body.trim(),
+            tags: noticeForm.tags.split(",").map((tag) => tag.trim()).filter(Boolean),
+            cta: noticeForm.cta.trim(),
+            status: noticeForm.status,
+            createdAt: new Date().toISOString(),
+          };
+          setClients((prev) =>
+            prev.map((client) =>
+              client.id === currentClientId
+                ? { ...client, notifications: [notification, ...(client.notifications || [])] }
+                : client
+            )
+          );
+          setNoticeForm({ type: "actie", title: "", body: "", tags: "", cta: "", status: "Open" });
+          setNoticeFeedback(`✓ Melding verstuurd naar ${currentClient.company}`);
+        }
+
+        function updateNotificationStatus(notificationId, status) {
+          setClients((prev) =>
+            prev.map((client) =>
+              client.id === currentClientId
+                ? {
+                    ...client,
+                    notifications: (client.notifications || []).map((item) =>
+                      item.id === notificationId ? { ...item, status } : item
+                    ),
+                  }
+                : client
+            )
+          );
+        }
+
+        function deleteNotification(notificationId) {
+          setClients((prev) =>
+            prev.map((client) =>
+              client.id === currentClientId
+                ? {
+                    ...client,
+                    notifications: (client.notifications || []).filter((item) => item.id !== notificationId),
+                  }
+                : client
+            )
+          );
+        }
+
+        function applyMetricTemplate(moduleKey, templateKey) {
+          setMetricTemplatesByModule((prev) => ({ ...prev, [moduleKey]: templateKey }));
+          const template = metricTemplates[templateKey] || metricTemplates.empty;
+          setMetricsFormsByModule((prev) => ({
+            ...prev,
+            [moduleKey]: template.map((metric, index) => ({
+              label: metric.label,
+              value: prev[moduleKey]?.[index]?.value || "",
+              icon: metric.icon || "",
+              placeholder: metric.placeholder || "Vul in...",
+            })),
+          }));
+          setMetricsFeedbackByModule((prev) => ({ ...prev, [moduleKey]: "" }));
+        }
+
+        function updateMetricSlot(moduleKey, index, field, value) {
+          setMetricsFormsByModule((prev) => ({
+            ...prev,
+            [moduleKey]: (prev[moduleKey] || metricTemplates.empty).map((metric, metricIndex) =>
+              metricIndex === index ? { ...metric, [field]: value } : metric
+            ),
+          }));
+          setMetricsFeedbackByModule((prev) => ({ ...prev, [moduleKey]: "" }));
+        }
+
+        function saveMetrics(moduleKey) {
+          setClients((prev) =>
+            prev.map((client) =>
+              client.id === currentClientId
+                ? {
+                    ...client,
+                    metricsByModule: {
+                      ...(client.metricsByModule || createMetricsByModule()),
+                      [moduleKey]: (metricsFormsByModule[moduleKey] || metricTemplates.empty).map((metric) => ({
+                        label: metric.label.trim(),
+                        value: metric.value.trim(),
+                        icon: metric.icon || "",
+                        placeholder: metric.placeholder || "Vul in...",
+                      })),
+                    },
+                  }
+                : client
+            )
+          );
+          setMetricsFeedbackByModule((prev) => ({ ...prev, [moduleKey]: "✓ Metrics opgeslagen" }));
+        }
+
+        function setPrimaryModule(moduleKey) {
+          setClients((prev) =>
+            prev.map((client) =>
+              client.id === currentClientId
+                ? { ...client, primaryModule: moduleKey }
+                : client
+            )
+          );
+        }
+
+        function toggleMetricBlock(moduleKey) {
+          setOpenMetricBlocks((prev) => ({ ...prev, [moduleKey]: !prev[moduleKey] }));
+        }
+
+        const activeMetricModules = getActiveServiceModules(currentClient);
+
+        return (
+          <>
+            <AdminHeader
+              currentClientName={currentClient.company}
+              onLogout={() => {
+                localStorage.removeItem(ADMIN_SESSION_KEY);
+                setSession(false);
+              }}
+            />
+
+            <section className="subpage-hero compact">
+              <div className="grid-bg" />
+              <div className="container">
+                <span className="eyebrow on-dark">Adminportaal</span>
+                <h1>Beheer per klant welke modules zichtbaar zijn.</h1>
+                <p className="lead-on-dark">
+                  Klanten zien alleen hun eigen actieve modules. Jij beheert hier de zichtbaarheid, bestanden, notities en projectstatussen.
+                </p>
+              </div>
+            </section>
+
+            <section className="portal-v2-section">
+              <div className="container">
+                <div className="portal-shell portal-shell--admin-only">
+                  <aside className="portal-admin">
+                    <div className="portal-card">
+                      <div className="portal-card__head">
+                        <div>
+                          <span className="feed-eyebrow">Admin</span>
+                          <h3>Klantconfiguratie</h3>
+                        </div>
+                      </div>
+
+                      <div className="portal-admin-section">
+                        <span className="feed-eyebrow">Inloggegevens</span>
+                        <p className="portal-section-note">E-mail en wachtwoord voor deze klant</p>
+                      </div>
+
+                      <label className="portal-field">
+                        <span>E-mailadres</span>
+                        <input
+                          type="email"
+                          name="client_email"
+                          placeholder="klant@bedrijf.nl"
+                          value={loginForm.email}
+                          onChange={(e) => setLoginForm((prev) => ({ ...prev, email: e.target.value }))}
+                        />
+                      </label>
+
+                      <label className="portal-field">
+                        <span>Wachtwoord</span>
+                        <div className="portal-password-wrap">
+                          <input
+                            type={showPassword ? "text" : "password"}
+                            name="client_password"
+                            placeholder="Minimaal 8 tekens"
+                            value={loginForm.password}
+                            onChange={(e) => setLoginForm((prev) => ({ ...prev, password: e.target.value }))}
+                          />
+                          <button type="button" className="portal-toggle-btn" onClick={() => setShowPassword((v) => !v)}>
+                            {showPassword ? "Verberg" : "Toon"}
+                          </button>
+                        </div>
+                      </label>
+
+                      <label className="portal-field">
+                        <span>Bevestig wachtwoord</span>
+                        <div className="portal-password-wrap">
+                          <input
+                            type={showConfirm ? "text" : "password"}
+                            name="client_password_confirm"
+                            placeholder="Herhaal wachtwoord"
+                            value={loginForm.confirm}
+                            onChange={(e) => setLoginForm((prev) => ({ ...prev, confirm: e.target.value }))}
+                          />
+                          <button type="button" className="portal-toggle-btn" onClick={() => setShowConfirm((v) => !v)}>
+                            {showConfirm ? "Verberg" : "Toon"}
+                          </button>
+                        </div>
+                      </label>
+
+                      {loginFeedback.text ? (
+                        <div className={`portal-inline-feedback ${loginFeedback.type}`}>{loginFeedback.text}</div>
+                      ) : null}
+
+                      <button className="portal-primary-btn" onClick={saveLoginCredentials}>Inloggegevens opslaan</button>
+
+                      <label className="portal-field">
+                        <span>Kies klant</span>
+                        <select value={currentClientId} onChange={(e) => setCurrentClientId(e.target.value)}>
+                          {clients.map((client) => <option key={client.id} value={client.id}>{client.company}</option>)}
+                        </select>
+                      </label>
+
+                      <label className="portal-field">
+                        <span>Bedrijfsnaam</span>
+                        <input type="text" value={currentClient.company} onChange={(e) => updateCompanyName(e.target.value)} />
+                      </label>
+
+                      <div className="portal-create-client">
+                        <input type="text" placeholder="Nieuwe bedrijfsnaam" value={newClientName} onChange={(e) => setNewClientName(e.target.value)} />
+                        <button onClick={addClient}>Create client</button>
+                      </div>
+
+                      <div className="admin-module-list">
+                        {Object.keys(moduleMeta).map((key) => (
+                          <label key={key} className="admin-module-toggle">
+                            <span>{moduleMeta[key].label}</span>
+                            <input type="checkbox" checked={!!currentClient.modules[key]} onChange={() => updateModuleToggle(key)} />
+                          </label>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="portal-card">
+                      <div className="portal-card__head">
+                        <div>
+                          <span className="feed-eyebrow">Bestanden</span>
+                          <h3>Uploads per klant</h3>
+                        </div>
+                        <label className="portal-upload">
+                          Upload bestand
+                          <input type="file" onChange={uploadFile} hidden />
+                        </label>
+                      </div>
+                      <div className="file-list">
+                        {currentClient.files.length ? currentClient.files.map((file) => <div key={file} className="file-pill">{file}</div>) : <p className="empty-copy">Nog geen bestanden toegevoegd.</p>}
+                      </div>
+                    </div>
+                  </aside>
+
+                  <main className="portal-main">
+                    <div className="portal-main-head">
+                      <div>
+                        <span className="feed-eyebrow">Client preview</span>
+                        <h2>{currentClient.company}</h2>
+                        <p>Zo ziet deze klant alleen de modules waarvoor betaald wordt.</p>
+                      </div>
+                    </div>
+
+                    <article className="portal-card">
+                      <div className="portal-card__head">
+                        <div>
+                          <span className="feed-eyebrow">Zichtbare navigatie</span>
+                          <h3>Wat de klant ziet</h3>
+                        </div>
+                      </div>
+                      <div className="file-list">
+                        <div className="file-pill">Dashboard</div>
+                        {Object.entries(currentClient.modules).filter(([, enabled]) => enabled).map(([key]) => <div key={key} className="file-pill">{moduleMeta[key].label}</div>)}
+                      </div>
+                    </article>
+
+                    <article className="portal-card">
+                      <div className="portal-card__head">
+                        <div>
+                          <span className="feed-eyebrow">Dashboard metrics</span>
+                          <h3>Wat de klant bovenaan ziet</h3>
+                        </div>
+                      </div>
+                      <div className="portal-metric-groups">
+                        {activeMetricModules.map((moduleKey) => (
+                          <div key={moduleKey} className="portal-metric-group">
+                            <button className="portal-metric-group-head" type="button" onClick={() => toggleMetricBlock(moduleKey)}>
+                              <div className="portal-metric-group-title">
+                                <span>{openMetricBlocks[moduleKey] ? "▼" : "▶"}</span>
+                                <strong>{moduleMeta[moduleKey].label} metrics</strong>
+                              </div>
+                              <label className="portal-primary-toggle" onClick={(e) => e.stopPropagation()}>
+                                <input
+                                  type="radio"
+                                  name="primary_module"
+                                  checked={currentClient.primaryModule === moduleKey}
+                                  onChange={() => setPrimaryModule(moduleKey)}
+                                />
+                                <span>Primair</span>
+                              </label>
+                            </button>
+
+                            {openMetricBlocks[moduleKey] ? (
+                              <div className="portal-metric-group-body">
+                                <label className="portal-field">
+                                  <span>Laad template</span>
+                                  <select
+                                    value={metricTemplatesByModule[moduleKey] || ""}
+                                    onChange={(e) => applyMetricTemplate(moduleKey, e.target.value)}
+                                  >
+                                    <option value="">Kies template...</option>
+                                    <option value="email">E-mail marketing</option>
+                                    <option value="seo">SEO</option>
+                                    <option value="ads">Ads</option>
+                                    <option value="compliance">AI Compliance</option>
+                                    <option value="empty">Leeg (zelf invullen)</option>
+                                  </select>
+                                </label>
+
+                                <div className="portal-metric-config">
+                                  {(metricsFormsByModule[moduleKey] || metricTemplates.empty).map((metric, index) => (
+                                    <div key={index} className="portal-metric-slot">
+                                      <div className="portal-admin-section">
+                                        <span className="feed-eyebrow">Metric slot {index + 1}</span>
+                                      </div>
+                                      <label className="portal-field">
+                                        <span>Label</span>
+                                        <input
+                                          type="text"
+                                          placeholder="bijv. Email revenue"
+                                          value={metric.label}
+                                          onChange={(e) => updateMetricSlot(moduleKey, index, "label", e.target.value)}
+                                        />
+                                      </label>
+                                      <label className="portal-field">
+                                        <span>Waarde</span>
+                                        <input
+                                          type="text"
+                                          placeholder={metric.placeholder || "Vul in..."}
+                                          value={metric.value}
+                                          onChange={(e) => updateMetricSlot(moduleKey, index, "value", e.target.value)}
+                                        />
+                                      </label>
+                                      <label className="portal-field">
+                                        <span>Icoon (optioneel)</span>
+                                        <select
+                                          value={metric.icon}
+                                          onChange={(e) => updateMetricSlot(moduleKey, index, "icon", e.target.value)}
+                                        >
+                                          {metricIcons.map((icon) => (
+                                            <option key={icon.label} value={icon.value}>{icon.label}</option>
+                                          ))}
+                                        </select>
+                                      </label>
+                                    </div>
+                                  ))}
+                                </div>
+
+                                <button className="portal-primary-btn" onClick={() => saveMetrics(moduleKey)}>Metrics opslaan</button>
+                                {metricsFeedbackByModule[moduleKey] ? <div className="portal-inline-feedback success">{metricsFeedbackByModule[moduleKey]}</div> : null}
+                              </div>
+                            ) : null}
+                          </div>
+                        ))}
+                      </div>
+                    </article>
+
+                    <article className="portal-card">
+                      <div className="portal-card__head">
+                        <div>
+                          <span className="feed-eyebrow">Projectstatus</span>
+                          <h3>Status per actieve module</h3>
+                        </div>
+                      </div>
+                      <div className="project-list">
+                        {Object.entries(currentClient.modules).filter(([, enabled]) => enabled).map(([key]) => (
+                          <div key={key} className="project-item">
+                            <div>
+                              <strong>{moduleMeta[key].label}</strong>
+                              <span>{currentClient.projectStatus[key] || "Open"}</span>
+                            </div>
+                            <select value={currentClient.projectStatus[key] || "Open"} onChange={(e) => updateProjectStatus(key, e.target.value)}>
+                              <option>Open</option>
+                              <option>In behandeling</option>
+                              <option>Afgerond</option>
+                              <option>Actief</option>
+                            </select>
+                          </div>
+                        ))}
+                      </div>
+                    </article>
+
+                    <article className="portal-card">
+                      <div className="portal-card__head">
+                        <div>
+                          <span className="feed-eyebrow">Melding sturen</span>
+                          <h3>De klant ziet dit direct in zijn portaal</h3>
+                        </div>
+                      </div>
+
+                      <label className="portal-field">
+                        <span>Type</span>
+                        <select value={noticeForm.type} onChange={(e) => setNoticeForm((prev) => ({ ...prev, type: e.target.value }))}>
+                          <option value="actie">Actie vereist</option>
+                          <option value="voorstel">Voorstel</option>
+                          <option value="uitgevoerd">Uitgevoerd</option>
+                          <option value="inzicht">Inzicht</option>
+                        </select>
+                      </label>
+
+                      <label className="portal-field">
+                        <span>Titel</span>
+                        <input type="text" placeholder="Kort en duidelijk" value={noticeForm.title} onChange={(e) => setNoticeForm((prev) => ({ ...prev, title: e.target.value }))} />
+                      </label>
+
+                      <label className="portal-field">
+                        <span>Bericht</span>
+                        <textarea className="portal-textarea portal-textarea--compact" rows="3" placeholder="Wat moet de klant weten?" value={noticeForm.body} onChange={(e) => setNoticeForm((prev) => ({ ...prev, body: e.target.value }))} />
+                      </label>
+
+                      <label className="portal-field">
+                        <span>Tags</span>
+                        <input type="text" placeholder="E-mail, hoog risico" value={noticeForm.tags} onChange={(e) => setNoticeForm((prev) => ({ ...prev, tags: e.target.value }))} />
+                      </label>
+
+                      <label className="portal-field">
+                        <span>Actieknop (optioneel)</span>
+                        <input type="text" placeholder="bijv. Wij regelen dit" value={noticeForm.cta} onChange={(e) => setNoticeForm((prev) => ({ ...prev, cta: e.target.value }))} />
+                      </label>
+
+                      <label className="portal-field">
+                        <span>Status</span>
+                        <select value={noticeForm.status} onChange={(e) => setNoticeForm((prev) => ({ ...prev, status: e.target.value }))}>
+                          <option>Open</option>
+                          <option>Afgerond</option>
+                        </select>
+                      </label>
+
+                      <button className="portal-primary-btn portal-primary-btn--full" onClick={sendNotification}>Melding versturen →</button>
+                      {noticeFeedback ? <div className="portal-inline-feedback success">{noticeFeedback}</div> : null}
+
+                      <div className="portal-admin-section portal-admin-section--spaced">
+                        <span className="feed-eyebrow">Melding geschiedenis</span>
+                      </div>
+                      <div className="notification-history">
+                        {currentClient.notifications?.length ? currentClient.notifications.map((item) => (
+                          <div key={item.id} className="notification-history-item">
+                            <div className="notification-history-head">
+                              <div className="notification-history-title">
+                                <span className={`notification-dot ${item.type}`}></span>
+                                <strong>{item.title}</strong>
+                              </div>
+                              <button className="notification-delete" onClick={() => deleteNotification(item.id)}>×</button>
+                            </div>
+                            <div className="notification-history-meta">
+                              <span>{new Date(item.createdAt).toLocaleString("nl-NL", { day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" })}</span>
+                              <span className={`notification-status ${item.status === "Afgerond" ? "done" : ""}`}>{item.status}</span>
+                            </div>
+                            <div className="notification-history-controls">
+                              <button
+                                className="notification-toggle"
+                                onClick={() => updateNotificationStatus(item.id, item.status === "Open" ? "Afgerond" : "Open")}
+                              >
+                                {item.status === "Open" ? "Markeer als afgerond" : "Zet terug naar open"}
+                              </button>
+                            </div>
+                          </div>
+                        )) : <p className="empty-copy">Nog geen meldingen voor deze klant.</p>}
+                      </div>
+                    </article>
+
+                    <article className="portal-card">
+                      <div className="portal-card__head">
+                        <div>
+                          <span className="feed-eyebrow">Notities</span>
+                          <h3>Intern dossier per klant</h3>
+                        </div>
+                      </div>
+                      <textarea className="portal-textarea" placeholder="Voeg notitie toe voor deze klant" value={notesDraft} onChange={(e) => setNotesDraft(e.target.value)} />
+                      <button className="portal-save-btn" onClick={saveNote}>Notitie opslaan</button>
+                      <div className="note-list">
+                        {currentClient.notes.length ? currentClient.notes.map((note, index) => <div key={index} className="note-item">{note}</div>) : <p className="empty-copy">Nog geen notities toegevoegd.</p>}
+                      </div>
+                    </article>
+                  </main>
+                </div>
+              </div>
+            </section>
+
+            <SharedFooter />
+          </>
+        );
+      }
+
+      ReactDOM.createRoot(document.getElementById("root")).render(<Page />);
+    </script>
+  </body>
+</html>

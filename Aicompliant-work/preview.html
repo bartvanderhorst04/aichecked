@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="nl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Preview — AIChecked.nl</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,400;9..144,600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.v2.css" />
+    <style>
+      body {
+        margin: 0;
+        min-height: 100vh;
+        background:
+          radial-gradient(720px 420px at 90% 0%, oklch(0.78 0.16 35 / 0.12), transparent 60%),
+          radial-gradient(720px 420px at 10% 70%, oklch(0.78 0.14 152 / 0.08), transparent 60%),
+          var(--ink-0);
+        color: var(--paper);
+        font-family: var(--sans);
+      }
+      .wrap {
+        max-width: 980px;
+        margin: 0 auto;
+        padding: 72px 24px 96px;
+      }
+      h1 {
+        font-family: var(--serif);
+        font-size: clamp(48px, 8vw, 88px);
+        line-height: 0.95;
+        letter-spacing: -0.04em;
+        margin: 18px 0 18px;
+      }
+      p {
+        max-width: 60ch;
+        color: var(--text-on-ink-dim);
+        line-height: 1.7;
+      }
+      .eyebrow {
+        font-size: 11px;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--accent);
+      }
+      .grid {
+        margin-top: 36px;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+      }
+      @media (max-width: 760px) {
+        .grid { grid-template-columns: 1fr; }
+      }
+      .card {
+        display: block;
+        padding: 22px 22px 20px;
+        border-radius: 22px;
+        border: 1px solid oklch(1 0 0 / 0.08);
+        background: linear-gradient(180deg, oklch(1 0 0 / 0.03), oklch(1 0 0 / 0.01)), var(--ink-1);
+        color: var(--paper);
+        text-decoration: none;
+        transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease;
+      }
+      .card:hover {
+        transform: translateY(-2px);
+        border-color: oklch(0.78 0.16 35 / 0.4);
+        box-shadow: 0 20px 40px -24px oklch(0 0 0 / 0.6);
+      }
+      .card strong {
+        display: block;
+        font-size: 22px;
+        margin-bottom: 8px;
+      }
+      .card span {
+        color: var(--text-on-ink-dim);
+      }
+    </style>
+  </head>
+  <body>
+    <main class="wrap">
+      <div class="eyebrow">Preview</div>
+      <h1>Open hier de hele site.</h1>
+      <p>Als losse links in de chat moeilijk openen, gebruik dan deze previewpagina als startpunt. Vanuit hier kun je direct doorklikken naar de belangrijkste pagina’s.</p>
+
+      <div class="grid">
+        <a class="card" href="index.html"><strong>Homepage</strong><span>Hero, intakeflow en positionering</span></a>
+        <a class="card" href="aanbod.html"><strong>Aanbod</strong><span>Overzicht met 6 volledig klikbare ingangen</span></a>
+        <a class="card" href="cases.html"><strong>Cases</strong><span>Bewijs van werk en resultaten</span></a>
+        <a class="card" href="ai-kennisbank.html"><strong>AI Kennisbank</strong><span>Artikelen en SEO-content</span></a>
+        <a class="card" href="contact.html"><strong>Contact</strong><span>Lead capture en intake</span></a>
+        <a class="card" href="klantportaal.html"><strong>Klantportaal</strong><span>Portal en dashboard flow</span></a>
+        <a class="card" href="email-marketing-compliance.html"><strong>Email marketing</strong><span>Specifieke aanbodpagina</span></a>
+        <a class="card" href="ads-compliance.html"><strong>Ads</strong><span>Specifieke aanbodpagina</span></a>
+        <a class="card" href="seo-compliance.html"><strong>SEO</strong><span>Specifieke aanbodpagina</span></a>
+        <a class="card" href="website-compliance.html"><strong>Website</strong><span>Specifieke aanbodpagina</span></a>
+        <a class="card" href="data-compliance.html"><strong>Data & tracking</strong><span>Specifieke aanbodpagina</span></a>
+        <a class="card" href="branding-compliance.html"><strong>Branding</strong><span>Specifieke aanbodpagina</span></a>
+      </div>
+    </main>
+  </body>
+</html>

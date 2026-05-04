@@ -1,0 +1,813 @@
+<!doctype html>
+<html lang="nl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Klantportaal — AIChecked.nl</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Fraunces:opsz,wght,SOFT@9..144,300..700,0..100&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.v2.css" />
+    <link rel="stylesheet" href="subpages.css" />
+    <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" crossorigin="anonymous"></script>
+  </head>
+  <body class="page-dark">
+    <div id="root"></div>
+    <script type="text/babel" src="components/Shared.jsx"></script>
+    <script type="text/babel">
+      const CLIENTS_KEY = "aichecked_clients_v1";
+      const CLIENT_SESSION_KEY = "aichecked_client_session_v1";
+
+      const moduleMeta = {
+        email: {
+          label: "E-mail marketing",
+          summary: "Flows, campagnes en toestemming blijven scherp en bruikbaar.",
+          metrics: [
+            { label: "Email revenue", value: "€18.4k" },
+            { label: "Actieve flows", value: "6" },
+            { label: "Compliance status", value: "92%" },
+            { label: "Campagne taken", value: "4 open" },
+          ],
+          compliance: [
+            "Email content compliance",
+            "Claims in email copy",
+            "Consent / unsubscribe status",
+            "Klaviyo flow status",
+          ],
+          projects: [
+            { title: "Winback flow herschreven", status: "In behandeling" },
+            { title: "Subject line claims review", status: "Open" },
+            { title: "Consent tags opgeschoond", status: "Afgerond" },
+          ],
+          feed: [
+            { type: "actie", status: "Open", title: "Actie vereist", body: "Een e-mailflow gebruikt verouderde toestemmingslogica. Zonder controle blijft dit terugkomen.", tags: ["email", "hoog risico"], cta: "Wij regelen dit" },
+            { type: "voorstel", status: "Open", title: "Voorstel", body: "De abandoned cart flow kan inhoudelijk scherper en tegelijk beter aansluiten op unsubscribe-richtlijnen.", tags: ["email", "conversie impact"], cta: "Laat uitvoeren" },
+            { type: "uitgevoerd", status: "Afgerond", title: "Uitgevoerd", body: "Klaviyo suppressions en consentstatus opnieuw gesynchroniseerd.", tags: ["email", "bewijs van werk"] },
+            { type: "inzicht", status: "In behandeling", title: "Inzicht", body: "Twee campagnes gebruiken AI-copy die redactionele check nodig heeft voor claims en tone of voice.", tags: ["email", "analyse"] },
+          ],
+        },
+        seo: {
+          label: "SEO",
+          summary: "Content, structuur en indexatie worden bewaakt en verbeterd.",
+          metrics: [
+            { label: "Top 10 keywords", value: "18" },
+            { label: "Nieuwe landingspagina's", value: "3" },
+            { label: "SEO compliance", value: "89%" },
+            { label: "Technische issues", value: "2 open" },
+          ],
+          compliance: [
+            "AI-content review",
+            "SEO claims check",
+            "Metadata & structuur",
+            "Indexatie en canonical controle",
+          ],
+          projects: [
+            { title: "Collection copy herschrijven", status: "In behandeling" },
+            { title: "FAQ schema review", status: "Open" },
+          ],
+          feed: [
+            { type: "voorstel", status: "Open", title: "Voorstel", body: "Drie category pages ranken zwak door generieke AI-copy. Herschrijven geeft meer grip op intent en risico.", tags: ["seo", "aanbevolen"], cta: "Laat uitvoeren" },
+            { type: "inzicht", status: "Open", title: "Inzicht", body: "Metadata op twee pagina’s doet claims die beter onderbouwd moeten worden.", tags: ["seo", "claims"] },
+          ],
+        },
+        ads: {
+          label: "Advertenties",
+          summary: "Campagnes, approval en creatives blijven winstgevend en beter onder controle.",
+          metrics: [
+            { label: "ROAS", value: "3.8" },
+            { label: "Actieve campagnes", value: "9" },
+            { label: "Approval status", value: "95%" },
+            { label: "Creative taken", value: "3 open" },
+          ],
+          compliance: [
+            "Advertentie claims check",
+            "Platform approval readiness",
+            "AI-visual review",
+            "Landing page consistency",
+          ],
+          projects: [
+            { title: "Meta creative review", status: "Open" },
+            { title: "Claim language opgeschoond", status: "Afgerond" },
+          ],
+          feed: [
+            { type: "actie", status: "Open", title: "Actie vereist", body: "Twee ad creatives bevatten beloftes die sneller op afkeuring kunnen stuiten.", tags: ["ads", "hoog risico"], cta: "Wij regelen dit" },
+            { type: "uitgevoerd", status: "Afgerond", title: "Uitgevoerd", body: "Advertentieteksten voor voorjaar-campagne zijn aangescherpt voor approval.", tags: ["ads", "bewijs van werk"] },
+          ],
+        },
+        compliance: {
+          label: "AI Compliance",
+          summary: "Risico's, fixes en controles blijven zichtbaar en actueel.",
+          metrics: [],
+          compliance: [
+            "Compliance score",
+            "Open risico's",
+            "Recente fixes",
+            "Uitgevoerde checks",
+          ],
+          projects: [
+            { title: "Consent review", status: "In behandeling" },
+            { title: "Privacy statement update", status: "Open" },
+          ],
+          feed: [
+            { type: "actie", status: "Open", title: "Actie vereist", body: "Twee scripts draaien zonder volledige consent-categorie.", tags: ["compliance", "hoog risico"], cta: "Wij regelen dit" },
+            { type: "uitgevoerd", status: "Afgerond", title: "Uitgevoerd", body: "Cookie-indeling is aangepast en opnieuw gecontroleerd.", tags: ["compliance", "bewijs van werk"] },
+          ],
+        },
+        website: {
+          label: "Website",
+          summary: "Structuur, conversie en compliance op de site blijven in lijn.",
+          metrics: [
+            { label: "Core pages live", value: "24" },
+            { label: "Open UX issues", value: "5" },
+            { label: "Site compliance", value: "90%" },
+            { label: "Open fixes", value: "3" },
+          ],
+          compliance: [
+            "Cookie- en privacy structuur",
+            "Pagina claims review",
+            "AI-content zichtbaarheid",
+            "Conversie en vertrouwen",
+          ],
+          projects: [
+            { title: "Homepage trust layer", status: "In behandeling" },
+            { title: "Checkout consent copy", status: "Open" },
+          ],
+          feed: [
+            { type: "actie", status: "Open", title: "Actie vereist", body: "De homepage gebruikt verouderde privacycopy in een leadblok.", tags: ["website", "aanbevolen"], cta: "Wij regelen dit" },
+            { type: "inzicht", status: "Open", title: "Inzicht", body: "Een nieuwe template maakt AI-content minder herkenbaar als ondersteuning in plaats van feit.", tags: ["website", "analyse"] },
+          ],
+        },
+        files: {
+          label: "Bestanden",
+          summary: "Alle relevante documenten, exports en bewijsstukken staan op één plek.",
+          metrics: [
+            { label: "Bestanden", value: "12" },
+            { label: "Laatste upload", value: "Vandaag" },
+            { label: "Actieve dossiers", value: "4" },
+            { label: "Te reviewen", value: "2" },
+          ],
+          compliance: [
+            "Privacy docs",
+            "Consent exports",
+            "Campagne exports",
+            "Audit bijlagen",
+          ],
+          projects: [
+            { title: "Q2 audit export klaarzetten", status: "Open" },
+          ],
+          feed: [
+            { type: "uitgevoerd", status: "Afgerond", title: "Uitgevoerd", body: "Nieuwe auditbijlage en consent-export aan dossier toegevoegd.", tags: ["files", "bewijs van werk"] },
+          ],
+        },
+      };
+      const serviceModuleKeys = ["ads", "compliance", "email", "seo", "website"];
+
+      const metricTemplates = {
+        email: [
+          { label: "VERSTUURDE MAILS", value: "", icon: "📧", placeholder: "bijv. 12.4k" },
+          { label: "GEGENEREERDE OMZET", value: "", icon: "💰", placeholder: "bijv. €3.2k" },
+          { label: "COMPLIANCE STATUS", value: "", icon: "✅", placeholder: "bijv. 92%" },
+          { label: "ACTIEVE FLOWS", value: "", icon: "⚡", placeholder: "bijv. 6" },
+        ],
+        ads: [
+          { label: "AD SPEND", value: "", icon: "💰", placeholder: "bijv. €4.2k" },
+          { label: "ROAS", value: "", icon: "🎯", placeholder: "bijv. 3.4x" },
+          { label: "COMPLIANCE STATUS", value: "", icon: "✅", placeholder: "bijv. 95%" },
+          { label: "ACTIEVE CAMPAGNES", value: "", icon: "📋", placeholder: "bijv. 5" },
+        ],
+        seo: [
+          { label: "ORGANISCH BEREIK", value: "", icon: "👁️", placeholder: "bijv. 8.2k" },
+          { label: "POSITIES GESTEGEN", value: "", icon: "📈", placeholder: "bijv. 14" },
+          { label: "COMPLIANCE STATUS", value: "", icon: "✅", placeholder: "bijv. 88%" },
+          { label: "TAKEN OPEN", value: "", icon: "📋", placeholder: "bijv. 2 open" },
+        ],
+        compliance: [
+          { label: "COMPLIANCE SCORE", value: "", icon: "🛡️", placeholder: "bijv. 94%" },
+          { label: "FIXES DEZE MAAND", value: "", icon: "🔧", placeholder: "bijv. 18" },
+          { label: "OPEN RISICO'S", value: "", icon: "⚠️", placeholder: "bijv. 2 open" },
+          { label: "CHECKS UITGEVOERD", value: "", icon: "📋", placeholder: "bijv. 47" },
+        ],
+        empty: [
+          { label: "", value: "", icon: "", placeholder: "Vul in..." },
+          { label: "", value: "", icon: "", placeholder: "Vul in..." },
+          { label: "", value: "", icon: "", placeholder: "Vul in..." },
+          { label: "", value: "", icon: "", placeholder: "Vul in..." },
+        ],
+      };
+
+      function getActiveServiceModules(client) {
+        return serviceModuleKeys
+          .filter((key) => client.modules?.[key])
+          .sort((a, b) => moduleMeta[a].label.localeCompare(moduleMeta[b].label, "nl"));
+      }
+
+      function normalizeModuleMetrics(source) {
+        return (source || metricTemplates.empty).slice(0, 4).map((metric) => ({
+          label: metric.label || "",
+          value: metric.value || "",
+          icon: metric.icon || "",
+          placeholder: metric.placeholder || "Vul in...",
+        }));
+      }
+
+      function createMetricsByModule(baseMetrics = null) {
+        return {
+          email: normalizeModuleMetrics(baseMetrics),
+          seo: normalizeModuleMetrics(),
+          ads: normalizeModuleMetrics(),
+          compliance: normalizeModuleMetrics(),
+          website: normalizeModuleMetrics(),
+        };
+      }
+
+      const seedClients = [
+        {
+          id: "forcemagneten",
+          company: "Forcemagneten",
+          login: { email: "forcemagneten@client.aichecked.nl", password: "Forcemagneten2026!" },
+          modules: { email: true, seo: false, ads: false, compliance: false, website: false, files: false },
+          notes: ["Focus op e-mailretentie en compliance in flows."],
+          files: ["audit-email-q2.pdf"],
+          projectStatus: { email: "In behandeling" },
+          primaryModule: "email",
+          metricsByModule: {
+            email: normalizeModuleMetrics(metricTemplates.email),
+            seo: normalizeModuleMetrics(),
+            ads: normalizeModuleMetrics(),
+            compliance: normalizeModuleMetrics(),
+            website: normalizeModuleMetrics(),
+          },
+        },
+        {
+          id: "studiomova",
+          company: "Studio Mova",
+          login: { email: "studiomova@client.aichecked.nl", password: "StudioMova2026!" },
+          modules: { email: true, seo: true, ads: true, compliance: true, website: true, files: true },
+          notes: ["Full package met monitoring over alle lagen."],
+          files: ["site-audit.pdf", "ads-review.pdf", "consent-export.csv"],
+          projectStatus: { email: "Afgerond", seo: "Open", ads: "In behandeling", website: "In behandeling", files: "Actief" },
+          primaryModule: "compliance",
+          metricsByModule: {
+            email: normalizeModuleMetrics(metricTemplates.email),
+            seo: normalizeModuleMetrics(metricTemplates.seo),
+            ads: normalizeModuleMetrics(metricTemplates.ads),
+            compliance: normalizeModuleMetrics(metricTemplates.compliance),
+            website: normalizeModuleMetrics(),
+          },
+        },
+        {
+          id: "novapets",
+          company: "Nova Pets",
+          login: { email: "novapets@client.aichecked.nl", password: "NovaPets2026!" },
+          modules: { email: true, seo: false, ads: true, compliance: false, website: false, files: true },
+          notes: ["Ads en e-mail als groeilijn, documenten in portal."],
+          files: ["creative-review.pdf"],
+          projectStatus: { email: "Open", ads: "In behandeling", files: "Actief" },
+          primaryModule: "ads",
+          metricsByModule: {
+            email: normalizeModuleMetrics(metricTemplates.email),
+            seo: normalizeModuleMetrics(),
+            ads: normalizeModuleMetrics(metricTemplates.ads),
+            compliance: normalizeModuleMetrics(),
+            website: normalizeModuleMetrics(),
+          },
+        },
+      ];
+
+      const filters = ["Alles", "Actie vereist", "Uitgevoerd", "Voorstellen", "Inzicht"];
+      const dotColor = {
+        actie: "var(--signal-bad)",
+        voorstel: "var(--signal-warn)",
+        uitgevoerd: "var(--signal-ok)",
+        inzicht: "oklch(0.7 0.15 240)",
+      };
+
+      function relativeTime(isoString) {
+        if (!isoString) return "";
+        const now = Date.now();
+        const diff = now - new Date(isoString).getTime();
+        const hour = 60 * 60 * 1000;
+        const day = 24 * hour;
+        if (diff < hour) return "zojuist";
+        if (diff < day) return `${Math.max(1, Math.floor(diff / hour))}u geleden`;
+        if (diff < day * 2) return "gisteren";
+        return new Date(isoString).toLocaleDateString("nl-NL", { day: "2-digit", month: "2-digit" });
+      }
+
+      function loadClients() {
+        const stored = localStorage.getItem(CLIENTS_KEY);
+        if (!stored) {
+          localStorage.setItem(CLIENTS_KEY, JSON.stringify(seedClients));
+          return seedClients;
+        }
+        try {
+          const parsed = JSON.parse(stored);
+          return parsed.map((client) => {
+            const seed = seedClients.find((item) => item.id === client.id);
+            return {
+              ...client,
+              modules: { compliance: false, ...client.modules },
+              login: client.login || seed?.login || { email: "", password: "" },
+              notifications: client.notifications || [],
+              metricsByModule: (() => {
+                if (client.metricsByModule) {
+                  return {
+                    email: normalizeModuleMetrics(client.metricsByModule.email),
+                    seo: normalizeModuleMetrics(client.metricsByModule.seo),
+                    ads: normalizeModuleMetrics(client.metricsByModule.ads),
+                    compliance: normalizeModuleMetrics(client.metricsByModule.compliance),
+                    website: normalizeModuleMetrics(client.metricsByModule.website),
+                  };
+                }
+                const firstModule = getActiveServiceModules({ modules: { compliance: false, ...client.modules } })[0] || "email";
+                const migrated = createMetricsByModule();
+                migrated[firstModule] = normalizeModuleMetrics(client.metrics || seed?.metrics || []);
+                return migrated;
+              })(),
+              primaryModule: (() => {
+                const modules = getActiveServiceModules({ modules: { compliance: false, ...client.modules } });
+                if (client.primaryModule && modules.includes(client.primaryModule)) return client.primaryModule;
+                return modules[0] || "email";
+              })(),
+            };
+          });
+        } catch {
+          localStorage.setItem(CLIENTS_KEY, JSON.stringify(seedClients));
+          return seedClients;
+        }
+      }
+
+      function PortalHeader({ currentClientName, onLogout }) {
+        return (
+          <header className="site-header">
+            <div className="container inner">
+              <a className="brand" href="index.html">
+                <span className="brand-dot" aria-hidden="true"></span>
+                <span><b>AIChecked</b><span className="tld">.nl</span></span>
+              </a>
+              <nav className="nav">
+                <a href="aanbod.html">Aanbod</a>
+                <a href="cases.html">Cases</a>
+                <a href="ai-kennisbank.html">AI Kennisbank</a>
+                <a href="klantportaal.html" style={{ color: "var(--text-on-paper)" }}>Klantportaal</a>
+                <button className="portal portal-button" onClick={onLogout}>Uitloggen</button>
+              </nav>
+            </div>
+            <div className="portal-topbar">
+              <div className="portal-topbar__inner container">
+                <div>
+                  <span className="portal-mini-label">Ingelogd als klant</span>
+                  <strong>{currentClientName}</strong>
+                </div>
+                <a className="portal-admin-link" href="adminportaal.html">Adminportaal →</a>
+              </div>
+            </div>
+          </header>
+        );
+      }
+
+      function ClientLogin({
+        clientEmail,
+        setClientEmail,
+        clientPassword,
+        setClientPassword,
+        adminEmail,
+        setAdminEmail,
+        adminPassword,
+        setAdminPassword,
+        clientError,
+        adminError,
+        onClientLogin,
+        onAdminLogin,
+      }) {
+        return (
+          <>
+            <SharedHeader />
+            <section className="subpage-hero compact">
+              <div className="grid-bg" />
+              <div className="container">
+                <span className="eyebrow on-dark">Klant login</span>
+                <h1>Log <span className="accent-text">veilig</span> in op jouw AIChecked omgeving.</h1>
+                <p className="lead-on-dark">
+                  Klanten loggen hier in op hun eigen portaal. Alleen actieve modules en relevante data worden getoond.
+                </p>
+              </div>
+            </section>
+
+            <section className="portal-v2-section">
+              <div className="container">
+                <div className="portal-login-shell">
+                  <article className="portal-card portal-login-card">
+                    <div className="portal-card__head">
+                      <div>
+                        <span className="feed-eyebrow">Klantportaal</span>
+                        <h3>Inloggen als klant</h3>
+                      </div>
+                    </div>
+                    <div className="auth-brand">AIChecked Client</div>
+                    <form className="auth-form" onSubmit={(e) => { e.preventDefault(); onClientLogin(); }}>
+                      <label className="auth-field">
+                        <span>E-mailadres</span>
+                        <input type="email" value={clientEmail} onChange={(e) => setClientEmail(e.target.value)} placeholder="u@bedrijf.nl" />
+                      </label>
+                      <label className="auth-field">
+                        <span>Wachtwoord</span>
+                        <input type="password" value={clientPassword} onChange={(e) => setClientPassword(e.target.value)} placeholder="••••••••" />
+                      </label>
+                      {clientError ? <div className="auth-error">{clientError}</div> : null}
+                      <button className="auth-submit" type="submit">Kies deze →</button>
+                    </form>
+                  </article>
+
+                  <article className="portal-card portal-login-card">
+                    <div className="portal-card__head">
+                      <div>
+                        <span className="feed-eyebrow">Beheer</span>
+                        <h3>Inloggen als admin</h3>
+                      </div>
+                    </div>
+                    <div className="auth-brand">AIChecked Admin</div>
+                    <form className="auth-form" onSubmit={(e) => { e.preventDefault(); onAdminLogin(); }}>
+                      <label className="auth-field">
+                        <span>E-mailadres</span>
+                        <input type="email" value={adminEmail} onChange={(e) => setAdminEmail(e.target.value)} placeholder="u@bedrijf.nl" />
+                      </label>
+                      <label className="auth-field">
+                        <span>Wachtwoord</span>
+                        <input type="password" value={adminPassword} onChange={(e) => setAdminPassword(e.target.value)} placeholder="••••••••" />
+                      </label>
+                      {adminError ? <div className="auth-error">{adminError}</div> : null}
+                      <button className="auth-submit" type="submit">Kies deze →</button>
+                    </form>
+                  </article>
+                </div>
+              </div>
+            </section>
+
+            <SharedFooter />
+          </>
+        );
+      }
+
+      function Sidebar({ enabledModules, activeSection, setActiveSection }) {
+        const items = [{ key: "dashboard", label: "Dashboard" }].concat(
+          enabledModules.map((key) => ({ key, label: moduleMeta[key].label }))
+        );
+
+        return (
+          <aside className="portal-sidebar">
+            <div className="portal-sidebar__head">
+              <span className="feed-eyebrow">Navigatie</span>
+              <h3>Alleen jouw actieve modules</h3>
+            </div>
+            <div className="portal-sidebar__nav">
+              {items.map((item) => (
+                <button
+                  key={item.key}
+                  className={`portal-nav-item ${activeSection === item.key ? "active" : ""}`}
+                  onClick={() => setActiveSection(item.key)}
+                >
+                  <span>{item.label}</span>
+                </button>
+              ))}
+            </div>
+          </aside>
+        );
+      }
+
+      function ModuleMetricCards({ metrics }) {
+        if (!metrics.length) {
+          return (
+            <div className="portal-metrics-empty">
+              Je dashboard wordt binnenkort ingericht.
+            </div>
+          );
+        }
+
+        return (
+          <div className="portal-metrics">
+            {metrics.map((metric) => (
+              <article key={metric.label} className="portal-metric-card">
+                <span>{metric.icon ? `${metric.icon} ${metric.label}` : metric.label}</span>
+                <strong>{metric.value}</strong>
+              </article>
+            ))}
+          </div>
+        );
+      }
+
+      function MetricTabs({ modules, activeModule, setActiveModule }) {
+        if (modules.length <= 1) return null;
+        return (
+          <div className="portal-metric-tabs">
+            {modules.map((moduleKey) => (
+              <button
+                key={moduleKey}
+                className={`filter-chip ${activeModule === moduleKey ? "active" : ""}`}
+                onClick={() => setActiveModule(moduleKey)}
+              >
+                {moduleMeta[moduleKey].label}
+              </button>
+            ))}
+          </div>
+        );
+      }
+
+      function Page() {
+        const [clients, setClients] = React.useState(loadClients);
+        const [sessionClientId, setSessionClientId] = React.useState(localStorage.getItem(CLIENT_SESSION_KEY) || "");
+        const [activeFilter, setActiveFilter] = React.useState("Alles");
+        const [activeSection, setActiveSection] = React.useState("dashboard");
+        const [activeMetricModule, setActiveMetricModule] = React.useState("");
+        const [notif, setNotif] = React.useState(true);
+        const [clientEmail, setClientEmail] = React.useState("");
+        const [clientPassword, setClientPassword] = React.useState("");
+        const [adminEmail, setAdminEmail] = React.useState("");
+        const [adminPassword, setAdminPassword] = React.useState("");
+        const [clientError, setClientError] = React.useState("");
+        const [adminError, setAdminError] = React.useState("");
+
+        const currentClient = clients.find((client) => client.id === sessionClientId) || clients[0];
+
+        React.useEffect(() => {
+          const handleStorage = (event) => {
+            if (event.key === CLIENTS_KEY) {
+              setClients(loadClients());
+            }
+          };
+          window.addEventListener("storage", handleStorage);
+          return () => window.removeEventListener("storage", handleStorage);
+        }, []);
+
+        if (!sessionClientId) {
+          return (
+            <ClientLogin
+              clientEmail={clientEmail}
+              setClientEmail={setClientEmail}
+              clientPassword={clientPassword}
+              setClientPassword={setClientPassword}
+              adminEmail={adminEmail}
+              setAdminEmail={setAdminEmail}
+              adminPassword={adminPassword}
+              setAdminPassword={setAdminPassword}
+              clientError={clientError}
+              adminError={adminError}
+              onClientLogin={() => {
+                if (!clientEmail.trim() || !clientPassword.trim()) {
+                  setClientError("Vul een e-mailadres en wachtwoord in.");
+                  return;
+                }
+                const matchedClient = clients.find(
+                  (client) =>
+                    client.login?.email?.toLowerCase() === clientEmail.trim().toLowerCase() &&
+                    client.login?.password === clientPassword
+                );
+                if (!matchedClient) {
+                  setClientError("E-mailadres of wachtwoord klopt niet.");
+                  return;
+                }
+                localStorage.setItem(CLIENT_SESSION_KEY, matchedClient.id);
+                setSessionClientId(matchedClient.id);
+                setClientError("");
+              }}
+              onAdminLogin={() => {
+                if (!adminEmail.trim() || !adminPassword.trim()) {
+                  setAdminError("Vul een e-mailadres en wachtwoord in.");
+                  return;
+                }
+                localStorage.setItem("aichecked_admin_session_v1", "true");
+                window.location.href = "adminportaal.html";
+              }}
+            />
+          );
+        }
+
+        const enabledModules = Object.entries(currentClient.modules)
+          .filter(([, enabled]) => enabled)
+          .map(([key]) => key);
+        const activeServiceModules = getActiveServiceModules(currentClient);
+
+        React.useEffect(() => {
+          const fallback = currentClient.primaryModule && activeServiceModules.includes(currentClient.primaryModule)
+            ? currentClient.primaryModule
+            : (activeServiceModules[0] || "");
+          if (activeSection === "dashboard") {
+            setActiveMetricModule(fallback);
+          } else if (activeServiceModules.includes(activeSection)) {
+            setActiveMetricModule(activeSection);
+          }
+        }, [currentClient.id, currentClient.primaryModule, activeSection, activeServiceModules.join("|")]);
+
+        React.useEffect(() => {
+          if (activeSection !== "dashboard" && !enabledModules.includes(activeSection)) {
+            setActiveSection("dashboard");
+          }
+        }, [activeSection, enabledModules]);
+
+        const allFeedItems = enabledModules.flatMap((moduleKey) =>
+          moduleMeta[moduleKey].feed.map((item) => ({ ...item, moduleKey, moduleLabel: moduleMeta[moduleKey].label }))
+        );
+
+        const adminFeedItems = (currentClient.notifications || []).map((item) => ({
+          ...item,
+          moduleKey: "admin",
+          moduleLabel: "",
+          isCustom: true,
+        }));
+
+        const combinedFeedItems = [...adminFeedItems, ...allFeedItems].sort((a, b) => {
+          const aTime = a.createdAt ? new Date(a.createdAt).getTime() : 0;
+          const bTime = b.createdAt ? new Date(b.createdAt).getTime() : 0;
+          return bTime - aTime;
+        });
+
+        const visibleFeedItems = activeSection === "dashboard"
+          ? combinedFeedItems
+          : combinedFeedItems.filter((item) => item.moduleKey === activeSection || item.moduleKey === "admin");
+
+        const filteredFeed = activeFilter === "Alles" ? visibleFeedItems : visibleFeedItems.filter((it) => {
+          if (activeFilter === "Actie vereist") return it.type === "actie";
+          if (activeFilter === "Uitgevoerd") return it.type === "uitgevoerd";
+          if (activeFilter === "Voorstellen") return it.type === "voorstel";
+          if (activeFilter === "Inzicht") return it.type === "inzicht";
+          return true;
+        });
+
+        const metricModuleKey = activeSection === "dashboard"
+          ? activeMetricModule
+          : (activeServiceModules.includes(activeSection) ? activeSection : "");
+
+        const metrics = metricModuleKey
+          ? ((currentClient.metricsByModule?.[metricModuleKey] || []).filter((metric) => metric.label.trim() && metric.value.trim()))
+          : [];
+
+        const complianceChecks = activeSection === "dashboard"
+          ? enabledModules.flatMap((key) => moduleMeta[key].compliance.map((item) => ({ label: item, moduleLabel: moduleMeta[key].label })))
+          : (moduleMeta[activeSection]?.compliance || []).map((item) => ({ label: item, moduleLabel: moduleMeta[activeSection].label }));
+
+        const projects = activeSection === "dashboard"
+          ? enabledModules.flatMap((key) => (moduleMeta[key].projects || []).map((project) => ({ ...project, moduleKey: key, moduleLabel: moduleMeta[key].label })))
+          : (moduleMeta[activeSection]?.projects || []).map((project) => ({ ...project, moduleKey: activeSection, moduleLabel: moduleMeta[activeSection].label }));
+
+        return (
+          <>
+            <PortalHeader
+              currentClientName={currentClient.company}
+              onLogout={() => {
+                localStorage.removeItem(CLIENT_SESSION_KEY);
+                setSessionClientId("");
+                setActiveSection("dashboard");
+              }}
+            />
+
+            <section className="subpage-hero compact">
+              <div className="grid-bg" />
+              <div className="container">
+                <span className="eyebrow on-dark">Klantportaal</span>
+                <h1>
+                  Alleen zichtbaar wat telt voor<br />
+                  <span className="serif-italic">{currentClient.company}</span>
+                </h1>
+                <p className="lead-on-dark">
+                  Geen irrelevante modules, geen lege onderdelen. Alleen dashboard, data en acties die bij dit pakket horen.
+                </p>
+              </div>
+            </section>
+
+            <section className="portal-v2-section">
+              <div className="container">
+                <div className="portal-shell portal-shell--client">
+                  <Sidebar enabledModules={enabledModules} activeSection={activeSection} setActiveSection={setActiveSection} />
+
+                  <main className="portal-main">
+                    <div className="portal-main-head">
+                      <div>
+                        <span className="feed-eyebrow">Dashboard</span>
+                        <h2>{activeSection === "dashboard" ? "Overzicht voor deze klant" : moduleMeta[activeSection].label}</h2>
+                        <p>
+                          {activeSection === "dashboard"
+                            ? "Je ziet hier alleen metrics, checks en acties uit modules die voor jouw pakket actief zijn."
+                            : moduleMeta[activeSection].summary}
+                        </p>
+                      </div>
+                      <button className={`notif-pill ${notif ? "on" : ""}`} onClick={() => setNotif((n) => !n)}>
+                        Notificaties {notif ? "aan" : "uit"}
+                      </button>
+                    </div>
+
+                    {activeSection === "dashboard" ? (
+                      <MetricTabs modules={activeServiceModules} activeModule={activeMetricModule} setActiveModule={setActiveMetricModule} />
+                    ) : null}
+                    <ModuleMetricCards metrics={metrics} />
+
+                    <div className="portal-content-grid">
+                      <article className="portal-card">
+                        <div className="portal-card__head">
+                          <div>
+                            <span className="feed-eyebrow">Compliance status</span>
+                            <h3>Alleen checks uit actieve modules</h3>
+                          </div>
+                        </div>
+                        <div className="compliance-grid">
+                          {complianceChecks.map((item) => (
+                            <div key={`${item.moduleLabel}-${item.label}`} className="compliance-card">
+                              <strong>{item.label}</strong>
+                              <span>{item.moduleLabel}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </article>
+
+                      <article className="portal-card">
+                        <div className="portal-card__head">
+                          <div>
+                            <span className="feed-eyebrow">Project status</span>
+                            <h3>Wat er nu loopt</h3>
+                          </div>
+                        </div>
+                        <div className="project-list">
+                          {projects.map((project) => (
+                            <div key={project.title} className="project-item">
+                              <div>
+                                <strong>{project.title}</strong>
+                                <span>{currentClient.projectStatus[project.moduleKey] || project.status}</span>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </article>
+                    </div>
+
+                    <article className="portal-card">
+                      <div className="portal-card__head">
+                        <div>
+                          <span className="feed-eyebrow">Activity feed</span>
+                          <h3>Updates, acties en bewijs van werk</h3>
+                        </div>
+                      </div>
+                      <div className="portal-filters">
+                        {filters.map((f) => (
+                          <button
+                            key={f}
+                            className={`filter-chip ${activeFilter === f ? "active" : ""}`}
+                            onClick={() => setActiveFilter(f)}
+                          >
+                            {f}
+                          </button>
+                        ))}
+                      </div>
+                      <div className="feed-list">
+                        {filteredFeed.map((it, i) => (
+                          <div key={`${it.moduleKey}-${i}`} className={`feed-item type-${it.type}`}>
+                            <div className="feed-item-head">
+                              <div className="feed-item-title">
+                                <span className="feed-dot" style={{ background: dotColor[it.type] }} />
+                                <strong>{it.title}</strong>
+                              </div>
+                              <div className="feed-item-meta">
+                                {it.createdAt ? <span className="feed-time">{relativeTime(it.createdAt)}</span> : null}
+                                <span className={`feed-status status-${it.type}`}>{it.status}</span>
+                              </div>
+                            </div>
+                            <p>{it.body}</p>
+                            <div className="feed-tags">
+                              {it.moduleLabel ? <span className="feed-tag">{it.moduleLabel}</span> : null}
+                              {it.tags.map((t) => <span key={t} className="feed-tag">{t}</span>)}
+                            </div>
+                            {it.cta && (
+                              <button className={`feed-cta ${it.isCustom ? "feed-cta--custom" : ""}`}>{it.cta}</button>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    </article>
+
+                    {!!currentClient.modules.files && (
+                      <article className="portal-card">
+                        <div className="portal-card__head">
+                          <div>
+                            <span className="feed-eyebrow">Bestanden</span>
+                            <h3>Beschikbare documenten</h3>
+                          </div>
+                        </div>
+                        <div className="file-list">
+                          {currentClient.files.map((file) => <div key={file} className="file-pill">{file}</div>)}
+                        </div>
+                      </article>
+                    )}
+                  </main>
+                </div>
+              </div>
+            </section>
+
+            <SharedFooter />
+          </>
+        );
+      }
+
+      ReactDOM.createRoot(document.getElementById("root")).render(<Page />);
+    </script>
+  </body>
+</html>

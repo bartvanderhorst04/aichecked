@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="nl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hoe het werkt — AIChecked.nl</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Fraunces:opsz,wght,SOFT@9..144,300..700,0..100&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.v2.css" />
+    <link rel="stylesheet" href="subpages.css" />
+    <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" crossorigin="anonymous"></script>
+  </head>
+  <body class="page-dark">
+    <div id="root"></div>
+    <script type="text/babel" src="components/Shared.jsx"></script>
+    <script type="text/babel">
+      function ScanMock() {
+        return (
+          <div className="scanner">
+            <div className="scanner-input">
+              <span className="https">https://</span>
+              <input value="jouw-website.nl" readOnly />
+              <button>Scan</button>
+            </div>
+            <div className="scanner-result">
+              <div className="scan-results">
+                <h4>Compliance intake</h4>
+                <div className="summary">Eerste beoordeling · handmatig opgevolgd</div>
+                <div className="scan-grid">
+                  <div className="scan-item bad"><div className="top"><span className="label">Cookies & consent</span><span className="badge">Risico</span></div><div className="value">Controle</div><div className="note">Categorieën en scriptgedrag</div></div>
+                  <div className="scan-item warn"><div className="top"><span className="label">Tracking & tags</span><span className="badge">Let op</span></div><div className="value">Controle</div><div className="note">GA4, Meta, pixels en events</div></div>
+                  <div className="scan-item warn"><div className="top"><span className="label">Privacy pagina's</span><span className="badge">Let op</span></div><div className="value">Controle</div><div className="note">Privacy, cookies en voorwaarden</div></div>
+                  <div className="scan-item bad"><div className="top"><span className="label">Data & scripts</span><span className="badge">Risico</span></div><div className="value">Controle</div><div className="note">Datakwaliteit, opslag en scriptgebruik</div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+      }
+
+      function MonitorMock() {
+        return (
+          <div className="monitor">
+            <div className="monitor-head">
+              <div className="lights"><span></span><span></span><span></span></div>
+              <div className="monitor-url"><span className="https">https://</span>client-omgeving.nl</div>
+            </div>
+            <div className="monitor-body">
+              <div className="score-ring">
+                <svg viewBox="0 0 120 120">
+                  <circle className="track" cx="60" cy="60" r="50" />
+                  <circle className="progress" cx="60" cy="60" r="50" strokeDasharray="314" strokeDashoffset="32" />
+                </svg>
+                <div className="num"><b>90</b><small>monitoring</small></div>
+              </div>
+              <div className="monitor-summary">
+                <div className="label">Live dashboard</div>
+                <h3>Alles blijft onder controle</h3>
+                <p>Nieuwe wijzigingen, scripts en signalen worden automatisch getoetst en opgevolgd via het klantportaal.</p>
+              </div>
+            </div>
+            <div className="monitor-checks">
+              <div className="check-row ok"><span className="ico">✓</span><span className="name">Tracking script hersteld</span><span className="meta">Auto-fix</span></div>
+              <div className="check-row warn"><span className="ico">!</span><span className="name">Nieuwe cookie vendor gedetecteerd</span><span className="meta">Review</span></div>
+              <div className="check-row ok"><span className="ico">✓</span><span className="name">Maandelijkse check uitgevoerd</span><span className="meta">Geslaagd</span></div>
+            </div>
+            <div className="monitor-foot"><div className="stamp"><span className="live-dot"></span>Laatste check · 4 min geleden</div><div>v 24.04 · automatic</div></div>
+          </div>
+        );
+      }
+
+      function Page() {
+        return (
+          <>
+            <SharedHeader />
+            <section className="subpage-hero compact">
+              <div className="grid-bg" />
+              <div className="container">
+                <span className="eyebrow on-dark">Hoe het systeem werkt</span>
+                <h1>
+                  <span className="hero-line-plain">Geen eenmalige check.</span>
+                  <span className="hero-line-accent">Een doorlopend systeem.</span>
+                </h1>
+                <p className="lead-on-dark">Drie stappen. Eén systeem. Geen losse projecten.</p>
+              </div>
+            </section>
+
+            <section className="how-system-section">
+              <div className="container">
+                <div id="step-01" className="step-detail-shell">
+                  <div className="step-detail-copy">
+                    <span className="detail-num">01</span>
+                    <h2>Analyse & Inzicht</h2>
+                    <p>We maken zichtbaar wat al schuift in je website, tracking en consent-setup. Geen juridisch rapport, maar helder inzicht waar risico en verlies ontstaan.</p>
+                    <ul>
+                      <li>Volledige scan van website, tracking en consent</li>
+                      <li>Concrete risico's in begrijpelijke taal</li>
+                      <li>Fix-plan klaar binnen 24 uur</li>
+                    </ul>
+                  </div>
+                  <div className="step-detail-visual">
+                    <ScanMock />
+                  </div>
+                </div>
+
+                <div id="step-02" className="step-detail-shell reverse" style={{ marginTop: 22 }}>
+                  <div className="step-detail-copy">
+                    <span className="detail-num">02</span>
+                    <h2>Fix & Correctie</h2>
+                    <p>Na de analyse corrigeren we alles wat scheef staat. Zonder losse overlegcirkels, maar met directe aanpassingen en verificatie na elke fix.</p>
+                    <ul>
+                      <li>Directe aanpassingen zonder jouw tussenkomst</li>
+                      <li>Tracking, cookies, scripts en structuur gecorrigeerd</li>
+                      <li>Verificatie na elke fix</li>
+                    </ul>
+                  </div>
+                  <div className="step-detail-visual">
+                    <div className="before-after-card">
+                      <div className="before-after-grid">
+                        <div className="before-card">
+                          <strong>Voor</strong>
+                          <p>Tracking vuurt zonder consent, privacycopy is verouderd en de cookiebanner mist categorieën.</p>
+                        </div>
+                        <div className="after-card">
+                          <strong>Na</strong>
+                          <p>Consent gating klopt, scripts wachten netjes, en de privacylaag sluit weer aan op de live situatie.</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div id="step-03" className="step-detail-shell" style={{ marginTop: 22 }}>
+                  <div className="step-detail-copy">
+                    <span className="detail-num">03</span>
+                    <h2>Doorlopende Monitoring <span className="featured-badge">★ Meest gekozen</span></h2>
+                    <p>Dit is de laag die voorkomt dat alles weer terugzakt. Je portal blijft actueel en nieuwe fouten worden zichtbaar zodra systemen of regels veranderen.</p>
+                    <ul>
+                      <li>Automatische checks bij elke wijziging</li>
+                      <li>Updates bij nieuwe EU-regelgeving</li>
+                      <li>Maandelijks rapport via klantportaal</li>
+                    </ul>
+                    <blockquote>
+                      “Zonder controle ontstaan er opnieuw fouten.
+                      Wij zorgen dat alles blijft kloppen.”
+                    </blockquote>
+                  </div>
+                  <div className="step-detail-visual">
+                    <MonitorMock />
+                  </div>
+                </div>
+
+                <div className="system-compare">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th></th>
+                        <th>Analyse</th>
+                        <th>Fix</th>
+                        <th>Monitoring</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Wat zit erin</td>
+                        <td>Scan, risico’s, inzicht</td>
+                        <td>Correcties, verificatie, implementatie</td>
+                        <td>Doorlopende checks, updates, rapportage</td>
+                      </tr>
+                      <tr>
+                        <td>Doorlooptijd</td>
+                        <td>Binnen 24 uur eerste plan</td>
+                        <td>Afhankelijk van scope</td>
+                        <td>Maandelijks en doorlopend</td>
+                      </tr>
+                      <tr>
+                        <td>Doorlopend?</td>
+                        <td>Nee</td>
+                        <td>Nee</td>
+                        <td>Ja</td>
+                      </tr>
+                      <tr>
+                        <td>Portal access</td>
+                        <td>Basis na intake</td>
+                        <td>Ja</td>
+                        <td>Ja, volledig</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </section>
+
+            <CalendarBookingBlock eyebrow="ZIE HOE HET VOOR JOU WERKT" />
+
+            <section className="cta-strip">
+              <div className="container inner">
+                <div>
+                  <span className="eyebrow on-dark">Volgende stap</span>
+                  <h2 style={{ marginTop: 18 }}>Klaar om te starten?</h2>
+                  <p>Start met een eerste scan en laat ons daarna bepalen wat nu de slimste volgende stap is.</p>
+                  <div className="actions" style={{ marginTop: 28 }}>
+                    <a className="btn btn-on-dark" href="index.html#scanner">Start gratis scan →</a>
+                    <a className="btn btn-on-dark btn-secondary" href="https://calendar.google.com/calendar/appointments/schedules/AcZssZ1SPBgmZQ1XSYWQRkGAxUaSpRVhIIaFPBxq1EmTwHjVCdk_vOJT3Lloz3YUtpWrLd0rG-HTEPMS">Plan 20-min gesprek</a>
+                  </div>
+                </div>
+              </div>
+            </section>
+            <SharedFooter />
+          </>
+        );
+      }
+      ReactDOM.createRoot(document.getElementById("root")).render(<Page />);
+    </script>
+  </body>
+</html>

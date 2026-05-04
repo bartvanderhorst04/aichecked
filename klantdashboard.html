@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="nl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard | AICompliant.nl</title>
+    <meta
+      name="description"
+      content="Voorbeeld van het AICompliant dashboard met updates, acties, voorstellen en inzichten."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Cormorant+Garamond:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="site-header">
+        <a class="brand" href="index.html" aria-label="AICompliant.nl home">
+          <span class="brand-mark">AI</span>
+          <span class="brand-text">Compliant.nl</span>
+        </a>
+        <nav class="nav">
+          <a href="diensten.html">Aanpak</a>
+          <a href="cases.html">Cases</a>
+          <a href="blog.html">AI Kennisbank</a>
+          <a href="over-ons.html">Over ons</a>
+          <a class="is-active" href="klantportaal.html">Klantportaal</a>
+        </nav>
+        <a class="button button-outline" href="klantportaal.html">Uitloggen</a>
+      </header>
+
+      <main>
+        <section class="page-hero">
+          <div class="eyebrow">Dashboard</div>
+          <h1>Updates & acties voor Studio Nova</h1>
+          <p class="lead page-lead">
+            Ik zie wat er speelt, en met één klik wordt het geregeld.
+          </p>
+        </section>
+
+        <section class="dashboard-showcase">
+          <div class="dashboard-shell portal-dashboard">
+            <article class="dashboard-main glass-card">
+              <div class="dashboard-top">
+                <div>
+                  <p class="report-kicker">Activity feed</p>
+                  <h3>Chronologisch, duidelijk en direct uitvoerbaar</h3>
+                </div>
+                <span class="dashboard-pill">Notificaties aan</span>
+              </div>
+              <div class="filter-row">
+                <button class="filter-chip active" type="button" data-filter="all">Alles</button>
+                <button class="filter-chip" type="button" data-filter="critical">Actie vereist</button>
+                <button class="filter-chip" type="button" data-filter="success">Uitgevoerd</button>
+                <button class="filter-chip" type="button" data-filter="proposal">Voorstellen</button>
+                <button class="filter-chip" type="button" data-filter="insight">Inzicht</button>
+              </div>
+              <div class="feed-list">
+                <article class="feed-item critical" data-kind="critical">
+                  <div class="feed-meta">
+                    <span class="feed-type">🔴 Actie vereist</span>
+                    <span class="feed-status open" data-status>Open</span>
+                  </div>
+                  <p>Meta pixel meet op mobiel niet consistent. Zonder controle ontstaan hier opnieuw fouten en verkeerde data.</p>
+                  <div class="feed-labels">
+                    <span>hoog risico</span>
+                    <span>aanbevolen</span>
+                  </div>
+                  <div class="feed-actions">
+                    <button class="button button-primary" type="button" data-take-action>Direct laten fixen</button>
+                  </div>
+                </article>
+
+                <article class="feed-item proposal" data-kind="proposal">
+                  <div class="feed-meta">
+                    <span class="feed-type">🟡 Voorstel</span>
+                    <span class="feed-status open" data-status>Open</span>
+                  </div>
+                  <p>Een e-mailflow gebruikt verouderde toestemmingslogica. Dit voorstel voorkomt dat de fout later groter wordt.</p>
+                  <div class="feed-labels">
+                    <span>conversie impact</span>
+                    <span>aanbevolen</span>
+                  </div>
+                  <div class="feed-actions">
+                    <button class="button button-secondary" type="button" data-take-action>Laat uitvoeren</button>
+                  </div>
+                </article>
+
+                <article class="feed-item success" data-kind="success">
+                  <div class="feed-meta">
+                    <span class="feed-type">🟢 Uitgevoerd</span>
+                    <span class="feed-status done" data-status>Afgerond</span>
+                  </div>
+                  <p>Cookie banner opnieuw ingesteld. Scripts wachten nu op geldige toestemming.</p>
+                  <div class="feed-labels">
+                    <span>bewijs van werk</span>
+                  </div>
+                </article>
+
+                <article class="feed-item insight" data-kind="insight">
+                  <div class="feed-meta">
+                    <span class="feed-type">🔵 Inzicht</span>
+                    <span class="feed-status progress" data-status>In behandeling</span>
+                  </div>
+                  <p>Nieuwe AI-gegenereerde pagina gebruikt afwijkende events. Controle aanbevolen voordat verkeer wordt opgeschaald.</p>
+                  <div class="feed-labels">
+                    <span>analyse</span>
+                  </div>
+                </article>
+              </div>
+            </article>
+
+            <article class="dashboard-side glass-card">
+              <h3>Samenvatting</h3>
+              <ul class="timeline-list">
+                <li><strong>Volledige controle</strong><span>Alles gebeurt binnen het portaal. Geen mail, geen belafspraak, geen losse pagina’s.</span></li>
+                <li><strong>Updates & acties</strong><span>Nieuwste updates staan bovenaan en zijn direct uitvoerbaar.</span></li>
+                <li><strong>Status</strong><span>Open, in behandeling en afgerond zijn altijd zichtbaar.</span></li>
+                <li><strong>Retentie</strong><span>Je ziet elke maand wat wij doen en wat nog aandacht vraagt.</span></li>
+              </ul>
+            </article>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script>
+      const filterButtons = document.querySelectorAll("[data-filter]");
+      const feedItems = document.querySelectorAll(".feed-item");
+
+      document.querySelectorAll("[data-take-action]").forEach((button) => {
+        button.addEventListener("click", () => {
+          const activeItem = button.closest(".feed-item");
+          const status = activeItem.querySelector("[data-status]");
+          const content = activeItem.querySelector("p");
+          const labels = activeItem.querySelector(".feed-labels");
+
+          status.textContent = "In behandeling";
+          status.className = "feed-status progress";
+
+          if (content) {
+            content.textContent =
+              "Wij hebben deze actie ontvangen en direct in behandeling gezet. De volgende update verschijnt hier in het portaal.";
+          }
+
+          if (labels) {
+            labels.innerHTML = "<span>in uitvoering</span><span>update volgt</span>";
+          }
+
+          const actionRow = activeItem.querySelector(".feed-actions");
+          if (actionRow) actionRow.remove();
+        });
+      });
+
+      filterButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          filterButtons.forEach((item) => item.classList.remove("active"));
+          button.classList.add("active");
+          const filter = button.dataset.filter;
+          feedItems.forEach((item) => {
+            item.hidden = filter !== "all" && item.dataset.kind !== filter;
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
