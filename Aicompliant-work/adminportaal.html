@@ -19,6 +19,8 @@
     <script type="text/babel">
       const CLIENTS_KEY = "aichecked_clients_v1";
       const ADMIN_SESSION_KEY = "aichecked_admin_session_v1";
+      const ADMIN_EMAIL = "bartvanderhorst04@icloud.com";
+      const ADMIN_PASSWORD = "Geldermalsen2004!";
       const moduleMeta = {
         email: { label: "E-mail marketing" },
         seo: { label: "SEO" },
@@ -316,6 +318,10 @@
               onLogin={() => {
                 if (!adminEmail.trim() || !adminPassword.trim()) {
                   setError("Vul een e-mailadres en wachtwoord in.");
+                  return;
+                }
+                if (adminEmail.trim().toLowerCase() !== ADMIN_EMAIL.toLowerCase() || adminPassword !== ADMIN_PASSWORD) {
+                  setError("E-mailadres of wachtwoord klopt niet.");
                   return;
                 }
                 localStorage.setItem(ADMIN_SESSION_KEY, "true");

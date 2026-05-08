@@ -3079,3 +3079,30 @@ body.page-dark .site-header,
     font-size: 14px;
   }
 }
+
+/* ─── Calendar Booking Section ─── */
+.calendar-booking-section {
+  padding: 80px 0;
+  background: var(--ink-0);
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+.calendar-booking-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: center;
+  background: rgba(255,255,255,0.04);
+  border: 0.5px solid rgba(255,255,255,0.1);
+  border-radius: 22px;
+  padding: 48px;
+}
+.calendar-booking-embed {
+  display: flex;
+  flex-direction: column;
+}
+@media (max-width: 768px) {
+  .calendar-booking-inner {
+    grid-template-columns: 1fr;
+    padding: 28px 24px;
+  }
+}
