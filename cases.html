@@ -3,70 +3,195 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Cases | AICompliant.nl</title>
-    <meta
-      name="description"
-      content="Cases over compliance, website builds en monitoring die laten zien wat AICompliant.nl in de praktijk doet."
-    />
+    <title>Cases — AIChecked.nl</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Cormorant+Garamond:wght@500;600;700&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="styles.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Fraunces:opsz,wght,SOFT@9..144,300..700,0..100&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.v2.css" />
+    <link rel="stylesheet" href="subpages.css" />
+    <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
   </head>
   <body>
-    <div class="page-shell">
-      <header class="site-header">
-        <a class="brand" href="index.html" aria-label="AICompliant.nl home">
-          <span class="brand-mark">AI</span>
-          <span class="brand-text">Compliant.nl</span>
-        </a>
-        <nav class="nav">
-          <a href="diensten.html">Aanpak</a>
-          <a class="is-active" href="cases.html">Cases</a>
-          <a href="blog.html">AI Kennisbank</a>
-          <a href="over-ons.html">Over ons</a>
-          <a href="contact.html">Contact</a>
-          <a href="klantportaal.html">Klantportaal</a>
-        </nav>
-      </header>
+    <div id="root"></div>
+    <script type="text/babel" src="components/Shared.jsx"></script>
+    <script type="text/babel">
+      const filters = [
+        { id: "all", label: "Alle" },
+        { id: "ads", label: "Ads" },
+        { id: "website", label: "Website" },
+        { id: "seo", label: "SEO" },
+        { id: "email", label: "E-mail marketing" },
+        { id: "branding", label: "Branding" },
+        { id: "data", label: "Data" },
+      ];
 
-      <main>
-        <section class="page-hero">
-          <div class="eyebrow">Cases</div>
-          <h1>Bewijs van werk dat laat zien waarom doorlopende controle werkt.</h1>
-          <p class="lead page-lead">
-            Niet alleen wat we controleren, maar wat we hebben opgelost en wat daarna
-            beter is blijven werken.
-          </p>
-        </section>
+      const cases = [
+        {
+          category: "data",
+          tag: "Compliance herstel",
+          title: "DTC webshop — tracking gefikst, data weer betrouwbaar",
+          client: "Studio Nova · 38 medewerkers",
+          duration: "3 weken herstel · sinds 14 mnd in monitoring",
+          summary: "Tracking werkte niet, cookies stonden fout en data was onbetrouwbaar. Hersteld en sindsdien maandelijks bijgehouden.",
+          stats: [
+            { v: "94", k: "Compliance score na fix" },
+            { v: "0", k: "Incidenten in 6 mnd" },
+            { v: "+38%", k: "Conversie attribute correct" },
+          ],
+          quote: "We dachten dat onze data klopte. Pas na de scan zagen we dat 4 van de 7 tools fout stonden.",
+          author: "Mark de B. — CMO",
+        },
+        {
+          category: "website",
+          tag: "Website build",
+          title: "Vanaf de basis goed gebouwd — geen herstel achteraf",
+          client: "Novex Health · scale-up",
+          duration: "8 weken bouw + maandelijkse monitoring",
+          summary: "Direct opgezet volgens compliance-eerst principe. Tracking, consent en datastructuur kloppen vanaf dag één.",
+          stats: [
+            { v: "100", k: "Score bij oplevering" },
+            { v: "−40%", k: "Herstelkosten vermeden" },
+            { v: "1×", k: "Privacy assessment doorlopen" },
+          ],
+          quote: "Niemand heeft me ooit zo eerlijk uitgelegd waar onze risico's zaten — voordat ze schade konden aanrichten.",
+          author: "Lia V. — Founder",
+        },
+        {
+          category: "ads",
+          tag: "Doorlopende monitoring",
+          title: "Marketingbureau — controle terug bij veel wijzigingen",
+          client: "Bureau Vitamine · 12 klanten in beheer",
+          duration: "Sinds 2 jaar in doorlopende monitoring",
+          summary: "Veel campagnes, weinig grip. Monitoring bracht overzicht en rust terug — fouten opgelost vóór ze schade aanrichten.",
+          stats: [
+            { v: "47", k: "Auto-fixes per kwartaal" },
+            { v: "12", k: "Klanten zonder zorgen" },
+            { v: "4u", k: "Tijdwinst per klant per maand" },
+          ],
+          quote: "Onze klanten weten niet eens dat er soms iets stuk was. Voor ons is dat de hoogste vorm van service.",
+          author: "Tessa K. — Director",
+        },
+      ];
 
-        <section class="blog-grid">
-          <article class="glass-card blog-card">
-            <div class="thumb thumb-one"></div>
-            <p class="service-tag">Compliance</p>
-            <h3>DTC webshop compliance herstel</h3>
-            <p>AI gebouwd, tracking fout, privacy issues en onbetrouwbare data. Daarna hersteld en gemonitord.</p>
-            <a class="text-link" href="cases/dtc-webshop-compliance-herstel.html">Bekijk case</a>
+      function CaseRow({ c, hidden, exiting }) {
+        return (
+          <article
+            className={`case-row ${hidden ? "is-hidden" : ""} ${exiting ? "is-exiting" : ""}`}
+            data-category={c.category}
+          >
+            <div className="case-row-num"><span>Case</span></div>
+            <div className="case-row-meta">
+              <span className="case-tag">{c.tag}</span>
+              <h2>{c.title}</h2>
+              <div className="case-row-info">
+                <div><span>Klant</span><b>{c.client}</b></div>
+                <div><span>Looptijd</span><b>{c.duration}</b></div>
+              </div>
+              <p className="case-row-summary">{c.summary}</p>
+              <blockquote className="case-quote">
+                <p>"{c.quote}"</p>
+                <cite>— {c.author}</cite>
+              </blockquote>
+            </div>
+            <div className="case-row-stats">
+              {c.stats.map((s, i) => (
+                <div key={i} className="case-row-stat">
+                  <strong>{s.v}</strong>
+                  <span>{s.k}</span>
+                </div>
+              ))}
+            </div>
           </article>
-          <article class="glass-card blog-card">
-            <div class="thumb thumb-two"></div>
-            <p class="service-tag">Website build</p>
-            <h3>Website vanaf de basis goed gebouwd</h3>
-            <p>Direct juist opgezet zodat tracking, structuur en privacy niet achteraf gerepareerd hoefden te worden.</p>
-            <a class="text-link" href="cases/website-vanaf-de-basis-goed-gebouwd.html">Bekijk case</a>
-          </article>
-          <article class="glass-card blog-card">
-            <div class="thumb thumb-three"></div>
-            <p class="service-tag">Monitoring</p>
-            <h3>Marketingbureau met continue monitoring</h3>
-            <p>Veel scripts, veel wijzigingen, weinig zicht. Monitoring bracht rust en maandelijkse controle terug.</p>
-            <a class="text-link" href="cases/marketingbureau-tracking-en-monitoring.html">Bekijk case</a>
-          </article>
-        </section>
-      </main>
-    </div>
+        );
+      }
+
+      function Page() {
+        const [activeFilter, setActiveFilter] = React.useState("all");
+        const [displayedFilters, setDisplayedFilters] = React.useState(() => Object.fromEntries(cases.map((c, i) => [i, "all"])));
+
+        React.useEffect(() => {
+          const timer = window.setTimeout(() => {
+            setDisplayedFilters(Object.fromEntries(cases.map((c, i) => [i, activeFilter])));
+          }, 150);
+          return () => window.clearTimeout(timer);
+        }, [activeFilter]);
+
+        const visibleCount = cases.filter((c) => activeFilter === "all" || c.category === activeFilter).length;
+
+        return (
+          <>
+            <SharedHeader />
+            <section className="subpage-hero compact">
+              <div className="grid-bg" />
+              <div className="container">
+                <span className="eyebrow on-dark">Cases</span>
+                <h1>
+                  <span className="hero-line-plain">Drie verhalen.</span>
+                  <span className="hero-line-accent">Eén patroon.</span>
+                </h1>
+                <p className="lead-on-dark">
+                  Eerst inzicht, dan fix, dan rust. We laten niet alleen zien wat fout gaat —
+                  we laten zien wat werkt en wat het oplevert.
+                </p>
+                <div style={{ display: "flex", gap: 12, flexWrap: "wrap", marginTop: 28 }}>
+                  <a className="btn btn-on-dark" href="aanbod.html">Bekijk het aanbod <span className="arrow">→</span></a>
+                  <a className="btn btn-on-dark btn-secondary" href="index.html#scanner">Start gratis scan</a>
+                </div>
+              </div>
+            </section>
+
+            <section className="cases-page-section">
+              <div className="container">
+                <div className="cases-filter-bar" role="tablist" aria-label="Filter cases op categorie">
+                  {filters.map((filter) => (
+                    <button
+                      key={filter.id}
+                      type="button"
+                      className={`cases-filter-pill ${activeFilter === filter.id ? "active" : ""}`}
+                      onClick={() => setActiveFilter(filter.id)}
+                    >
+                      {filter.label}
+                    </button>
+                  ))}
+                </div>
+                {cases.map((c, i) => {
+                  const matches = activeFilter === "all" || c.category === activeFilter;
+                  const hidden = !matches && displayedFilters[i] === activeFilter;
+                  const exiting = !matches && displayedFilters[i] !== activeFilter;
+                  return <CaseRow key={i} c={c} hidden={hidden} exiting={exiting} />;
+                })}
+                {visibleCount === 0 ? (
+                  <div className="cases-empty-state">
+                    Nog geen cases in deze categorie. Binnenkort meer.
+                  </div>
+                ) : null}
+              </div>
+            </section>
+
+            <section className="cta-strip">
+              <div className="container inner">
+                <div>
+                  <span className="eyebrow on-dark">Volgende stap</span>
+                  <h2 style={{ marginTop: 18 }}>
+                    Wil je weten waar <span className="accent">jij staat?</span>
+                  </h2>
+                  <p>Start met een eerste scan of bekijk eerst welk aanbod het beste past.</p>
+                  <div className="actions" style={{ marginTop: 28 }}>
+                    <a className="btn btn-on-dark" href="index.html#scanner">Start gratis scan <span className="arrow" style={{ color: "var(--accent)" }}>→</span></a>
+                    <a className="btn btn-on-dark btn-secondary" href="aanbod.html">Bekijk aanbod</a>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <SharedFooter />
+          </>
+        );
+      }
+
+      ReactDOM.createRoot(document.getElementById("root")).render(<Page />);
+    </script>
   </body>
 </html>

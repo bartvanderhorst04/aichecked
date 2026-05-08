@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="nl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Kennisbank over AI compliance, tracking en data | AIChecked.nl</title>
+    <meta name="description" content="Lees artikelen over AI compliance, tracking, privacy, consent en datakwaliteit. Praktische uitleg voor bedrijven die websites, e-mail en campagnes beter willen voorbereiden." />
+    <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" />
+    <link rel="canonical" href="https://aichecked.nl/ai-kennisbank.html" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="nl_NL" />
+    <meta property="og:site_name" content="AIChecked.nl" />
+    <meta property="og:title" content="AI Kennisbank over AI compliance, tracking en data" />
+    <meta property="og:description" content="Praktische kennis over AI compliance, tracking, privacy, consent en datakwaliteit voor websites, e-mail en campagnes." />
+    <meta property="og:url" content="https://aichecked.nl/ai-kennisbank.html" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="AI Kennisbank over AI compliance, tracking en data" />
+    <meta name="twitter:description" content="Praktische kennis over AI compliance, tracking, privacy, consent en datakwaliteit voor websites, e-mail en campagnes." />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "ItemList",
+        "name": "AI Kennisbank",
+        "url": "https://aichecked.nl/ai-kennisbank.html",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Waarom AI-websites fouten bevatten",
+            "url": "https://aichecked.nl/artikel-ai-websites-fouten.html"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Waarom je data vaak niet klopt",
+            "url": "https://aichecked.nl/artikel-data-klopt-niet.html"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "De risico's van tracking zonder controle",
+            "url": "https://aichecked.nl/artikel-tracking-zonder-controle.html"
+          }
+        ]
+      }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Fraunces:opsz,wght,SOFT@9..144,300..700,0..100&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.v2.css" />
+    <link rel="stylesheet" href="subpages.css" />
+    <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+  </head>
+  <body class="page-dark">
+    <div id="root"></div>
+    <script type="text/babel" src="components/Shared.jsx"></script>
+    <script type="text/babel">
+      const articles = [
+        {
+          tag: "AI risico's",
+          title: "Waarom AI-websites fouten bevatten",
+          summary: "AI bouwt snel. Juist daardoor blijven fouten in cookies, tracking en structuur vaak staan.",
+          tone: "forest",
+          slug: "artikel-ai-websites-fouten.html",
+        },
+        {
+          tag: "Data",
+          title: "Waarom je data vaak niet klopt",
+          summary: "Veel dashboards voelen betrouwbaar, terwijl de basis al scheef staat door slechte tracking.",
+          tone: "amber",
+          slug: "artikel-data-klopt-niet.html",
+        },
+        {
+          tag: "Tracking",
+          title: "De risico's van tracking zonder controle",
+          summary: "Zonder controle krijg je tegelijk compliance-risico en verkeerde stuurinformatie.",
+          tone: "cobalt",
+          slug: "artikel-tracking-zonder-controle.html",
+        },
+        {
+          tag: "Compliance",
+          title: "Waarom een eenmalige check niet genoeg is",
+          summary: "Regels schuiven, tools updaten, AI past dingen aan zonder dat je het ziet — maandelijks meekijken is geen luxe.",
+          tone: "crimson",
+          slug: "artikel-eenmalige-check-niet-genoeg.html",
+        },
+        {
+          tag: "Consent",
+          title: "Cookiebanners die niet voldoen",
+          summary: "De meeste banners die we tegenkomen missen split tussen functioneel en marketing — een kostbare fout.",
+          tone: "forest",
+          slug: "artikel-cookiebanners-die-niet-voldoen.html",
+        },
+        {
+          tag: "E-mail",
+          title: "Toestemming in mailflows: stille fouten",
+          summary: "Verouderde dubbele opt-in, onduidelijke bron — en plots gaat een hele lijst niet meer mee.",
+          tone: "amber",
+          slug: "artikel-toestemming-in-mailflows.html",
+        },
+      ];
+
+      function ArticleCard({ a }) {
+        return (
+          <article className={`article-card tone-${a.tone}`}>
+            <div className="article-thumb" aria-hidden="true">
+              <div className="thumb-glow" />
+              <div className="thumb-grid" />
+            </div>
+            <div className="article-body">
+              <span className="article-tag">{a.tag}</span>
+              <h3>{a.title}</h3>
+              <p>{a.summary}</p>
+              <a className="read-link" href={a.slug}>Lees artikel →</a>
+            </div>
+          </article>
+        );
+      }
+
+      function Page() {
+        return (
+          <>
+            <SharedHeader />
+            <section className="subpage-hero">
+              <div className="grid-bg" />
+              <div className="container">
+                <span className="eyebrow on-dark">AI Kennisbank</span>
+                <h1>
+                  Als je niets doet,<br/>
+                  <span className="serif-italic accent-text">ontstaan er opnieuw fouten.</span>
+                </h1>
+                <p className="lead-on-dark">
+                  Deze kennisbank maakt steeds hetzelfde punt: compliance, data en tracking vragen om
+                  doorlopende controle, niet om een eenmalige check.
+                </p>
+                <p className="lead-on-dark" style={{ maxWidth: "52ch", marginTop: 18 }}>
+                  Zoek je een direct antwoord? Begin dan bij de vraag die het dichtst bij je situatie ligt. Vraaggestuurde content,
+                  heldere openingsalinea’s en concrete antwoorden werken beter voor lezers, zoekmachines en AI-systemen tegelijk.
+                </p>
+              </div>
+            </section>
+
+            <section className="kb-grid-section">
+              <div className="container">
+                <div className="kb-grid">
+                  {articles.map((a, i) => <ArticleCard key={i} a={a} />)}
+                </div>
+              </div>
+            </section>
+
+            <section className="cta-strip">
+              <div className="container inner">
+                <div>
+                  <span className="eyebrow on-dark">Volgende stap</span>
+                  <h2 style={{ marginTop: 18 }}>
+                    Liever niet wachten tot het <span className="accent">misgaat?</span>
+                  </h2>
+                  <p>Start met een gratis scan en zie binnen 24 uur waar je staat.</p>
+                  <div className="actions" style={{ marginTop: 28 }}>
+                    <a className="btn btn-on-dark" href="index.html#scanner">Start gratis scan <span className="arrow" style={{ color: "var(--accent)" }}>→</span></a>
+                    <a className="btn btn-on-dark btn-secondary" href="https://calendar.google.com/calendar/appointments/schedules/AcZssZ1SPBgmZQ1XSYWQRkGAxUaSpRVhIIaFPBxq1EmTwHjVCdk_vOJT3Lloz3YUtpWrLd0rG-HTEPMS">Plan 20-min gesprek</a>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <SharedFooter />
+          </>
+        );
+      }
+
+      ReactDOM.createRoot(document.getElementById("root")).render(<Page />);
+    </script>
+  </body>
+</html>

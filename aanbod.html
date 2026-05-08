@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="nl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aanbod — AIChecked.nl</title>
+    <meta
+      name="description"
+      content="Ontdek het aanbod van AIChecked.nl: zes ingangen naar hetzelfde systeem voor AI compliance, marketingoptimalisatie en data zekerheid."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Fraunces:opsz,wght,SOFT@9..144,300..700,0..100&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.v2.css" />
+    <link rel="stylesheet" href="subpages.css" />
+    <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" crossorigin="anonymous"></script>
+  </head>
+  <body class="page-dark">
+    <div id="root"></div>
+    <script type="text/babel" src="components/Shared.jsx"></script>
+    <script type="text/babel">
+      const offers = [
+        {
+          title: "Niemand koopt\neen tweede keer.",
+          text: "Je lijst groeit, maar de omzet niet. Flows staan aan maar converteren niet — en niemand weet waarom.",
+          tag: "E-MAIL",
+          href: "email-marketing.html",
+        },
+        {
+          title: "Elke week\nbudget verspild.",
+          text: "Campagnes draaien, maar de cijfers kloppen niet. Creatives worden afgekeurd zonder duidelijke reden.",
+          tag: "ADS",
+          href: "advertenties.html",
+        },
+        {
+          title: "Google vindt\nons niet.",
+          text: "Concurrenten scoren op jouw zoekwoorden. Jouw content bestaat, maar bereikt niemand.",
+          tag: "SEO",
+          href: "ai-search.html",
+        },
+        {
+          title: "Bezoekers\nklikken weg.",
+          text: "Veel verkeer, weinig conversie. De website ziet er goed uit maar iets klopt niet — je weet alleen niet wat.",
+          tag: "WEBSITE",
+          href: "ai-compliance.html",
+        },
+        {
+          title: "Onze data\nklopt niet.",
+          text: "Dashboards zien er betrouwbaar uit. Maar de tracking staat fout en beslissingen zijn gebaseerd op verkeerde cijfers.",
+          tag: "DATA",
+          href: "ai-compliance.html",
+        },
+        {
+          title: "Ons merk\novertuigt niet.",
+          text: "Visuals en copy missen scherpte. Klanten twijfelen — niet aan het product, maar aan het gevoel.",
+          tag: "BRANDING",
+          href: "advertenties.html",
+        },
+        {
+          title: "Eén fout en\nwe krijgen een boete.",
+          text: "Cookie banner, tracking consent, privacy statement — ergens klopt het niet. En niemand heeft het door totdat het te laat is.",
+          tag: "AI COMPLIANCE",
+          href: "ai-compliance.html",
+          featured: true,
+        },
+      ];
+
+      const serviceCategories = [
+        {
+          icon: "📩",
+          title: "Email marketing",
+          subtitle: "Campagnes + basis flows",
+          cta: "Schrijven",
+          tiers: [
+            {
+              name: "Starter",
+              tagline: "Voor bedrijven die hun basis willen opzetten",
+              features: ["Campagnes + basis flows", "Segmentatie", "Compliance basis check"],
+            },
+            {
+              name: "Pro",
+              badge: "⭐",
+              highlight: true,
+              tagline: "Voor groei en structuur",
+              features: ["Geavanceerde flows", "AI optimalisatie", "Performance verbetering", "✔ Klantportaal"],
+            },
+            {
+              name: "Ultra",
+              tagline: "Voor maximale schaal en controle",
+              features: ["Volledige automation", "A/B testing", "Doorlopende optimalisatie", "✔ Klantportaal + strategie"],
+            },
+          ],
+          note: "De investering hangt af van je volume, flows en huidige setup.",
+        },
+        {
+          icon: "📢",
+          title: "Advertenties",
+          subtitle: "AI + compliance ads",
+          cta: "Schrijven",
+          tiers: [
+            {
+              name: "Starter",
+              tagline: "Voor het opzetten van winstgevende campagnes",
+              features: ["Basis campagnes", "Creatives + targeting"],
+            },
+            {
+              name: "Pro",
+              badge: "⭐",
+              highlight: true,
+              tagline: "Voor consistente groei",
+              features: ["Multi-platform campagnes", "AI optimalisatie", "Performance scaling", "✔ Klantportaal"],
+            },
+            {
+              name: "Ultra",
+              tagline: "Voor volledige funnel controle",
+              features: ["Advanced testing", "Creatives op schaal", "Doorlopende optimalisatie", "✔ Klantportaal + strategie"],
+            },
+          ],
+          note: "Afhankelijk van advertentiebudget, kanalen en complexiteit.",
+        },
+        {
+          icon: "🔍",
+          title: "AI Search",
+          subtitle: "SEO + AI visibility",
+          cta: "Schrijven",
+          tiers: [
+            {
+              name: "Starter",
+              tagline: "Voor basis vindbaarheid",
+              features: ["Technische optimalisatie", "Website scan"],
+            },
+            {
+              name: "Pro",
+              badge: "⭐",
+              highlight: true,
+              tagline: "Voor groei in Google en AI",
+              features: ["Structuur + content optimalisatie", "AI leesbaarheid", "✔ Klantportaal"],
+            },
+            {
+              name: "Ultra",
+              tagline: "Voor volledige zichtbaarheid",
+              features: ["Content ecosysteem", "Autoriteit opbouw", "Doorlopende optimalisatie", "✔ Klantportaal + strategie"],
+            },
+          ],
+          note: "Afhankelijk van website omvang, content en groeidoelen.",
+        },
+        {
+          icon: "🛡️",
+          title: "AI Compliance",
+          subtitle: "Risico’s, audits en monitoring",
+          cta: "Schrijven",
+          tiers: [
+            {
+              name: "Gratis Quick Scan",
+              tagline: "Eerste inzicht in risico's",
+              features: ["Snelle intake", "Eerste risico-indicatie", "Basisprioriteiten"],
+            },
+            {
+              name: "Audit",
+              badge: "⭐",
+              highlight: true,
+              tagline: "Volledige analyse van je marketing en website",
+              features: ["Concrete verbeterpunten", "Website + marketing review", "✔ Klantportaal"],
+            },
+            {
+              name: "Monitoring",
+              tagline: "Doorlopende checks en updates",
+              features: ["Doorlopende controles", "Updates bij wijzigingen", "✔ Klantportaal + strategie"],
+            },
+          ],
+          note: "Afhankelijk van omvang en complexiteit van je systemen.",
+        },
+      ];
+
+      function OfferGridCard({ item }) {
+        return (
+          <a className={`offer-grid-card ${item.featured ? "is-featured is-core" : ""}`} href={item.href}>
+            <div className="offer-grid-card__content">
+              <div>
+                <h3>{item.title}</h3>
+                <p>{item.text}</p>
+              </div>
+              <span className="offer-grid-card__tag">{item.tag} →</span>
+            </div>
+          </a>
+        );
+      }
+
+      function Page() {
+        return (
+          <>
+            <SharedHeader />
+
+            <section className="subpage-hero compact">
+              <div className="grid-bg" />
+              <div className="container">
+                <span className="eyebrow on-dark">Aanbod</span>
+                <h1>
+                  <span className="hero-line-plain">Waar helpen wij je groeien</span>
+                  <span className="hero-line-accent">— veilig en compliant</span>
+                </h1>
+                <p className="lead-on-dark">
+                  Kies je uitdaging. Wij lossen het op én zorgen dat je voldoet aan de nieuwste EU-regels.
+                </p>
+              </div>
+            </section>
+
+            <section className="offer-overview-section">
+              <div className="container">
+                <div className="section-head offer-overview-head">
+                  <span className="eyebrow on-dark">Overzicht</span>
+                  <div>
+                    <h2>Dit zijn de 7 diensten waarmee we bedrijven verder helpen.</h2>
+                    <p>
+                      Geen losse acties, maar één systeem voor AI compliance,
+                      marketing en data zekerheid, opgebouwd uit zeven duidelijke diensten.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="offer-overview-grid">
+                  {offers.map((item) => <OfferGridCard key={item.href} item={item} />)}
+                </div>
+
+                <div className="offer-overview-pitch">
+                  <p>Wij combineren AI, marketing en compliance in één systeem dat jouw groei versnelt zonder risico.</p>
+                </div>
+              </div>
+            </section>
+
+            <section className="cta-strip">
+              <div className="container inner">
+                <div>
+                  <span className="eyebrow on-dark">Volgende stap</span>
+                  <h2 style={{ marginTop: 18 }}>
+                    Eerst inzicht, daarna <span className="accent">gerichte actie.</span>
+                  </h2>
+                  <p>
+                    Start met een eerste analyse of plan direct een gesprek als je al weet
+                    waar het lekt.
+                  </p>
+                  <div className="actions" style={{ marginTop: 28 }}>
+                    <a className="btn btn-on-dark" href="index.html#scanner">Start gratis scan <span className="arrow" style={{ color: "var(--accent)" }}>→</span></a>
+                    <a className="btn btn-on-dark btn-secondary" href="https://calendar.google.com/calendar/appointments/schedules/AcZssZ1SPBgmZQ1XSYWQRkGAxUaSpRVhIIaFPBxq1EmTwHjVCdk_vOJT3Lloz3YUtpWrLd0rG-HTEPMS">Plan 20-min gesprek</a>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <SharedFooter />
+          </>
+        );
+      }
+
+      ReactDOM.createRoot(document.getElementById("root")).render(<Page />);
+    </script>
+  </body>
+</html>

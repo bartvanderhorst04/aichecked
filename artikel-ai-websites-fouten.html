@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="nl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Waarom AI-websites fouten bevatten — AIChecked.nl</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Fraunces:opsz,wght,SOFT@9..144,300..700,0..100&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.v2.css" />
+    <link rel="stylesheet" href="subpages.css" />
+    <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" crossorigin="anonymous"></script>
+  </head>
+  <body class="page-dark">
+    <div id="root"></div>
+    <script type="text/babel" src="components/Shared.jsx"></script>
+    <script type="text/babel">
+      function Page() {
+        return (
+          <>
+            <SharedHeader />
+            <section className="subpage-hero compact">
+              <div className="grid-bg" />
+              <div className="container">
+                <span className="eyebrow on-dark">AI risico's</span>
+                <h1>Waarom AI-websites fouten bevatten</h1>
+                <p className="lead-on-dark">AI versnelt bouwen, maar niet de controle. En precies daar ontstaan vaak de problemen.</p>
+              </div>
+            </section>
+            <section className="article-page-section">
+              <div className="container">
+                <div className="article-layout">
+                  <article className="article-main">
+                    <h2>Waarom dit gebeurt</h2>
+                    <p>AI-tools maken websites sneller produceerbaar, maar ze controleren niet automatisch of tracking, consent, privacyteksten en scriptgedrag nog logisch op elkaar aansluiten. Daardoor lijkt iets af, terwijl onder de motorkap juist risico’s ontstaan.</p>
+                    <div className="article-divider" />
+                    <h2>Waar het meestal misgaat</h2>
+                    <ul>
+                      <li>Cookiebanners blokkeren scripts niet op de juiste manier</li>
+                      <li>AI-gegenereerde content bevat claims zonder voldoende nuance</li>
+                      <li>Tracking en pixels worden toegevoegd zonder goede structuur</li>
+                      <li>Privacy- en cookiepagina’s blijven achter op de rest van de site</li>
+                    </ul>
+                    <div className="article-divider" />
+                    <h2>Wat dit betekent voor bedrijven</h2>
+                    <p>Voor e-commerce en online marketingteams betekent dit vooral dat de basis onbetrouwbaar wordt. Data voelt overtuigend, advertenties draaien door en content staat live, terwijl niemand zeker weet of alles nog goed is ingericht.</p>
+                  </article>
+                  <aside className="article-side">
+                    <h3>Wat wij hierin doen</h3>
+                    <div className="side-block"><p>We signaleren mogelijke risico’s in website-structuur, tracking en consent.</p></div>
+                    <div className="side-block"><p>We geven praktische aanbevelingen die direct toepasbaar zijn voor marketing en techniek.</p></div>
+                    <div className="side-block"><a className="btn btn-on-dark" href="index.html#scanner">Start gratis scan <span className="arrow">→</span></a></div>
+                  </aside>
+                </div>
+              </div>
+            </section>
+            <SharedFooter />
+          </>
+        );
+      }
+      ReactDOM.createRoot(document.getElementById("root")).render(<Page />);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="nl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Website verbeteren — AIChecked.nl</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Fraunces:opsz,wght,SOFT@9..144,300..700,0..100&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.v2.css" />
+    <link rel="stylesheet" href="subpages.css" />
+    <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" crossorigin="anonymous"></script>
+  </head>
+  <body class="page-dark">
+    <div id="root"></div>
+    <script type="text/babel" src="components/Shared.jsx"></script>
+    <script type="text/babel">
+      const page = {
+        label: "WEBSITE VERBETEREN",
+        titleTop: "Je hebt al een website.",
+        titleAccent: "Laat hem werken.",
+        sub: "Ik voeg toe wat ontbreekt — van SEO tot boekingssysteem.",
+        symptoms: [
+          "Je website krijgt bezoekers, maar geen aanvragen",
+          "Je website overtuigt niet",
+          "Je mist functies die klanten nodig hebben",
+        ],
+        symptomBodies: [
+          "Mensen kijken wel, maar nemen geen contact op.",
+          "Bezoekers haken af voordat ze actie nemen.",
+          "Geen duidelijke actie, geen aanvragen, geen groei.",
+        ],
+        steps: [
+          ["01", "Analyse van wat er nu staat", "We kijken waar je huidige site stilvalt, lekt of simpelweg niets oplevert."],
+          ["02", "Prioriteitenlijst van wat het meeste oplevert", "Ik zet op volgorde wat eerst moet gebeuren om zo snel mogelijk beweging te krijgen."],
+          ["03", "Aanpassingen doorvoeren", "Ik bouw, herschrijf en verbeter precies die onderdelen die nu ontbreken."],
+          ["04", "Resultaat meten en doorontwikkelen", "Daarna houden we bij wat werkt, wat blijft liggen en wat de volgende logische stap is."],
+        ],
+        results: [
+          "Site die actief klanten oplevert",
+          "Betere vindbaarheid in Google",
+          "Functies die tijd besparen",
+        ],
+      };
+
+      function Page() {
+        return (
+          <>
+            <SharedHeader />
+            <section className="subpage-hero compact">
+              <div className="grid-bg" />
+              <div className="container">
+                <span className="eyebrow on-dark">{page.label}</span>
+                <h1>
+                  <span className="hero-line-plain">{page.titleTop}</span>
+                  <span className="hero-line-accent">{page.titleAccent}</span>
+                </h1>
+                <p className="lead-on-dark">{page.sub}</p>
+              </div>
+            </section>
+            <section className="service-detail-section">
+              <div className="container">
+                <div className="service-tier-section">
+                  <div className="service-template-head">
+                    <span className="eyebrow on-dark">Wat er misgaat</span>
+                    <h2>Herken je dit?</h2>
+                  </div>
+                  <div className="service-symptom-grid">
+                    {page.symptoms.map((item, index) => (
+                      <article key={item} className="service-symptom-card">
+                        <strong>{item}</strong>
+                        <p>{page.symptomBodies[index]}</p>
+                      </article>
+                    ))}
+                  </div>
+                </div>
+                <div className="service-tier-section">
+                  <div className="service-template-head">
+                    <span className="eyebrow on-dark">Hoe ik het oplos</span>
+                    <h2>
+                      <span className="hero-line-plain">Wat ik</span>
+                      <span className="hero-line-accent">concreet doe.</span>
+                    </h2>
+                  </div>
+                  <div className="service-steps-row">
+                    {page.steps.map(([n, title, desc]) => (
+                      <article key={n} className="service-step">
+                        <span className="service-step-num">{n}</span>
+                        <h3>{title}</h3>
+                        <p>{desc}</p>
+                      </article>
+                    ))}
+                  </div>
+                </div>
+                <div className="service-tier-section">
+                  <div className="service-template-head">
+                    <span className="eyebrow on-dark">Wat je krijgt</span>
+                    <h2>
+                      <span className="hero-line-plain">Na de fix</span>
+                      <span className="hero-line-accent">klopt het weer.</span>
+                    </h2>
+                  </div>
+                  <div className="service-results-grid">
+                    {page.results.map((item) => (
+                      <article key={item} className="service-result-card">
+                        <strong>{item}</strong>
+                        <p>Je bestaande site wordt weer bruikbaar, uitbreidbaar en veel duidelijker als groeimiddel voor je bedrijf.</p>
+                      </article>
+                    ))}
+                  </div>
+                </div>
+                <div className="service-tier-section">
+                  <article className="service-cta-panel">
+                    <span className="eyebrow on-dark">Maak kennis</span>
+                    <h2>
+                      <span className="hero-line-plain">Klaar om dit</span>
+                      <span className="hero-line-accent">op te lossen?</span>
+                    </h2>
+                    <p>Als je al een website hebt, maar niet weet hoe je hem verder brengt, pakken we precies dat stuk op.</p>
+                    <div className="actions">
+                      <a className="btn btn-on-dark" href="https://calendar.google.com/calendar/appointments/schedules/AcZssZ1SPBgmZQ1XSYWQRkGAxUaSpRVhIIaFPBxq1EmTwHjVCdk_vOJT3Lloz3YUtpWrLd0rG-HTEPMS">Plan een gesprek →</a>
+                      <a className="btn btn-on-dark btn-secondary" href="mailto:info@aichecked.nl">Stuur een bericht</a>
+                    </div>
+                  </article>
+                </div>
+              </div>
+            </section>
+            <SharedFooter />
+          </>
+        );
+      }
+
+      ReactDOM.createRoot(document.getElementById("root")).render(<Page />);
+    </script>
+  </body>
+</html>

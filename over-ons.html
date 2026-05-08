@@ -3,102 +3,106 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Over ons | AICompliant.nl</title>
-    <meta
-      name="description"
-      content="AICompliant.nl is ontstaan vanuit één inzicht: websites die snel met AI worden gebouwd blijven alleen kloppen als iemand ze blijft controleren."
-    />
+    <title>Over ons — AIChecked.nl</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Cormorant+Garamond:wght@500;600;700&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="styles.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Fraunces:opsz,wght,SOFT@9..144,300..700,0..100&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.v2.css" />
+    <link rel="stylesheet" href="subpages.css" />
+    <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
   </head>
   <body>
-    <div class="page-shell">
-      <header class="site-header">
-        <a class="brand" href="index.html" aria-label="AICompliant.nl home">
-          <span class="brand-mark">AI</span>
-          <span class="brand-text">Compliant.nl</span>
-        </a>
-        <nav class="nav">
-          <a href="diensten.html">Aanpak</a>
-          <a href="cases.html">Cases</a>
-          <a href="blog.html">AI Kennisbank</a>
-          <a class="is-active" href="over-ons.html">Over ons</a>
-          <a href="contact.html">Contact</a>
-        </nav>
-        <a class="button button-outline" href="klantportaal.html">Klantportaal</a>
-      </header>
+    <div id="root"></div>
+    <script type="text/babel" src="components/Shared.jsx"></script>
+    <script type="text/babel">
+      function Page() {
+        return (
+          <>
+            <SharedHeader />
+            <section className="subpage-hero light">
+              <div className="container">
+                <span className="eyebrow">Over ons</span>
+                <h1>
+                  <span className="hero-line-plain">Geen bureau.</span>
+                  <span className="hero-line-accent">Een vangnet.</span>
+                </h1>
+                <p className="lead">
+                  AIChecked.nl ontstond uit één observatie: AI maakt alles sneller, inclusief de fouten die niemand meer ziet.
+                  Wij zijn opgericht om dat gat te dichten — niet met een eenmalige audit, maar met een doorlopend systeem.
+                </p>
+              </div>
+            </section>
 
-      <main>
-        <section class="page-hero">
-          <div class="eyebrow">Over ons</div>
-          <h1>Veel bedrijven bouwen snel met AI, maar vergeten wat daarna nodig blijft.</h1>
-          <p class="lead page-lead">
-            AICompliant.nl is ontstaan vanuit één inzicht:
-            snelle AI-output is pas waardevol als iemand ervoor zorgt dat alles blijft kloppen.
-          </p>
-        </section>
+            <section className="about-section">
+              <div className="container">
+                <div className="about-grid">
+                  <div className="about-block">
+                    <span className="eyebrow">Waarom we bestaan</span>
+                    <h2>Wat vandaag klopt,<br/><span className="hero-line-accent">klopt morgen niet meer.</span></h2>
+                    <p>
+                      Tools updaten zichzelf. Scripts schuiven door. Regels veranderen. AI genereert pagina's die niemand meer controleert.
+                      Een eenmalige check is daarom geen oplossing — het is een momentopname die direct verloopt.
+                    </p>
+                    <p>
+                      Wij doen het anders: we kijken doorlopend mee, lossen fouten op zodra ze ontstaan, en houden je op de hoogte via één portaal.
+                    </p>
+                  </div>
+                  <div className="about-pillars">
+                    <div className="about-pillar"><strong>Direct</strong><span>Geen tickets, geen tussenlagen. Wij pakken het op.</span></div>
+                    <div className="about-pillar"><strong>Doorlopend</strong><span>Maandelijks bijgehouden — niet één keer per jaar.</span></div>
+                    <div className="about-pillar"><strong>Duidelijk</strong><span>Je ziet exact wat we doen via het klantportaal.</span></div>
+                  </div>
+                </div>
+              </div>
+            </section>
 
-        <section class="feature-split">
-          <article class="glass-card">
-            <span class="eyebrow">Ontstaan</span>
-            <h2>Het probleem bleef terugkomen.</h2>
-            <p>Websites zagen er goed uit, maar onder de oppervlakte ging het mis. Tracking liep scheef, cookies stonden half goed en privacy-instellingen waren gebaseerd op aannames. En een maand later was het vaak alweer anders.</p>
-          </article>
-          <article class="glass-card">
-            <span class="eyebrow">Waarom dit telt</span>
-            <h2>Zonder controle ontstaan er opnieuw fouten.</h2>
-            <p>De schade zit niet alleen in risico, maar ook in verkeerde beslissingen door slechte data. Daarom verkopen wij geen losse checks, maar doorlopende controle.</p>
-          </article>
-        </section>
+            <section className="principles-section">
+              <div className="container">
+                <span className="eyebrow">Waar we voor staan</span>
+                <h2>Drie principes,<br/><span className="hero-line-accent">één belofte.</span></h2>
+                <div className="principles-grid">
+                  <div className="principle-card">
+                    <div className="principle-num">01</div>
+                    <h3>Eerlijk over wat fout is</h3>
+                    <p>Geen mooie rapporten, geen jargon. We laten zien wat niet klopt — en wat het je kost als je niets doet.</p>
+                  </div>
+                  <div className="principle-card">
+                    <div className="principle-num">02</div>
+                    <h3>Verantwoordelijk voor de fix</h3>
+                    <p>Wij wijzen niet alleen aan. Wij lossen op. Technisch, juridisch, qua data.</p>
+                  </div>
+                  <div className="principle-card">
+                    <div className="principle-num">03</div>
+                    <h3>Aanwezig na de fix</h3>
+                    <p>De echte waarde zit niet in de eerste check. Het zit in de 30e — als alles nog steeds klopt.</p>
+                  </div>
+                </div>
+              </div>
+            </section>
 
-        <section class="card-grid three-up">
-          <article class="glass-card">
-            <h3>Klantdata</h3>
-            <p>Als tracking niet klopt, stuur je op cijfers die betrouwbaarder lijken dan ze zijn.</p>
-          </article>
-          <article class="glass-card">
-            <h3>Risico</h3>
-            <p>Privacy, consent en scripts moeten blijven kloppen, ook nadat de site live staat.</p>
-          </article>
-          <article class="glass-card">
-            <h3>Aanpak</h3>
-            <p>Wij maken zichtbaar wat misgaat, lossen het op en houden het daarna maandelijks bij.</p>
-          </article>
-        </section>
-      </main>
+            <CalendarBookingBlock eyebrow="MAAK KENNIS" />
 
-      <footer class="site-footer">
-        <div class="footer-grid">
-          <div>
-            <h3>AICompliant.nl</h3>
-            <p>Wij zorgen dat je website altijd klopt — zonder dat jij ernaar hoeft om te kijken.</p>
-          </div>
-          <div>
-            <h4>Navigatie</h4>
-            <a href="diensten.html">Aanpak</a>
-            <a href="cases.html">Cases</a>
-            <a href="blog.html">AI Kennisbank</a>
-            <a href="over-ons.html">Over ons</a>
-            <a href="contact.html">Contact</a>
-          </div>
-          <div>
-            <h4>Diensten</h4>
-            <a href="diensten.html">Website check</a>
-            <a href="diensten.html">Website optimalisatie</a>
-            <a href="diensten.html">Doorlopende monitoring</a>
-          </div>
-          <div>
-            <h4>Contact</h4>
-            <p>hello@aicompliant.nl</p>
-            <p>+31 6 12 34 56 78</p>
-          </div>
-        </div>
-      </footer>
-    </div>
+            <section className="cta-strip">
+              <div className="container inner">
+                <div>
+                  <span className="eyebrow on-dark">Maak kennis</span>
+                  <h2 style={{ marginTop: 18 }}>Liefst <span className="accent">een gesprek</span> dan een formulier?</h2>
+                  <p>Twintig minuten, geen verkooppraat. Je legt uit waar het knelt — wij vertellen wat we zien.</p>
+                  <div className="actions" style={{ marginTop: 28 }}>
+                    <a className="btn btn-on-dark" href="https://calendar.google.com/calendar/appointments/schedules/AcZssZ1SPBgmZQ1XSYWQRkGAxUaSpRVhIIaFPBxq1EmTwHjVCdk_vOJT3Lloz3YUtpWrLd0rG-HTEPMS">Plan een gesprek <span className="arrow" style={{ color: "var(--accent)" }}>→</span></a>
+                    <a className="btn btn-on-dark btn-secondary" href="index.html#scanner">Start gratis scan</a>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <SharedFooter />
+          </>
+        );
+      }
+      ReactDOM.createRoot(document.getElementById("root")).render(<Page />);
+    </script>
   </body>
 </html>

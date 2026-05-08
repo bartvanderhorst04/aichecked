@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="nl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Email marketing — AIChecked.nl</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Fraunces:opsz,wght,SOFT@9..144,300..700,0..100&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.v2.css" />
+    <link rel="stylesheet" href="subpages.css" />
+    <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" crossorigin="anonymous"></script>
+  </head>
+  <body class="page-dark">
+    <div id="root"></div>
+    <script type="text/babel" src="components/Shared.jsx"></script>
+    <script type="text/babel">
+      const page = {
+        label: "EMAIL MARKETING",
+        titleTop: "Je lijst groeit.",
+        titleAccent: "Je omzet niet.",
+        sub: "Ik bouw flows en campagnes die van abonnees betalende klanten maken.",
+        symptoms: [
+          "Je verstuurt mails, maar er komt geen omzet uit",
+          "Mensen vullen hun winkelwagen, maar haken af",
+          "Je weet niet welke mails werken",
+        ],
+        symptomBodies: [
+          "Je mailinglijst groeit, maar klanten kopen niet.",
+          "Je hebt geinteresseerde klanten, maar je volgt ze niet op.",
+          "Je stuurt campagnes, maar hebt geen inzicht of resultaat.",
+        ],
+        steps: [
+          ["01", "Audit van bestaande flows en resultaten", "We halen uit je huidige setup waar omzet blijft liggen en waar automations stilvallen."],
+          ["02", "Strategie op basis van jouw klantreis", "We bepalen welke mails op welk moment nodig zijn om van aandacht weer omzet te maken."],
+          ["03", "Bouwen en activeren van nieuwe flows", "Ik zet campagnes en flows live die logisch voelen voor klant én merk."],
+          ["04", "Wekelijks bijhouden en optimaliseren", "We blijven kijken welke mails winnen, waar frictie zit en wat direct beter kan."],
+        ],
+        results: [
+          "Hogere omzet uit bestaande lijst",
+          "Flows die 24/7 werken zonder handmatig werk",
+          "Inzicht in wat elke mail oplevert",
+        ],
+      };
+
+      function Page() {
+        return (
+          <>
+            <SharedHeader />
+            <section className="subpage-hero compact">
+              <div className="grid-bg" />
+              <div className="container">
+                <span className="eyebrow on-dark">{page.label}</span>
+                <h1>
+                  <span className="hero-line-plain">{page.titleTop}</span>
+                  <span className="hero-line-accent">{page.titleAccent}</span>
+                </h1>
+                <p className="lead-on-dark">{page.sub}</p>
+              </div>
+            </section>
+            <section className="service-detail-section">
+              <div className="container">
+                <div className="service-tier-section">
+                  <div className="service-template-head">
+                    <span className="eyebrow on-dark">Wat er misgaat</span>
+                    <h2>Herken je dit?</h2>
+                  </div>
+                  <div className="service-symptom-grid">
+                    {page.symptoms.map((item, index) => (
+                      <article key={item} className="service-symptom-card">
+                        <strong>{item}</strong>
+                        <p>{page.symptomBodies[index]}</p>
+                      </article>
+                    ))}
+                  </div>
+                </div>
+                <div className="service-tier-section">
+                  <div className="service-template-head">
+                    <span className="eyebrow on-dark">Hoe ik het oplos</span>
+                    <h2>
+                      <span className="hero-line-plain">Wat ik</span>
+                      <span className="hero-line-accent">concreet doe.</span>
+                    </h2>
+                  </div>
+                  <div className="service-steps-row">
+                    {page.steps.map(([n, title, desc]) => (
+                      <article key={n} className="service-step">
+                        <span className="service-step-num">{n}</span>
+                        <h3>{title}</h3>
+                        <p>{desc}</p>
+                      </article>
+                    ))}
+                  </div>
+                </div>
+                <div className="service-tier-section">
+                  <div className="service-template-head">
+                    <span className="eyebrow on-dark">Wat je krijgt</span>
+                    <h2>
+                      <span className="hero-line-plain">Na de fix</span>
+                      <span className="hero-line-accent">klopt het weer.</span>
+                    </h2>
+                  </div>
+                  <div className="service-results-grid">
+                    {page.results.map((item) => (
+                      <article key={item} className="service-result-card">
+                        <strong>{item}</strong>
+                        <p>Dat merk je niet alleen in omzet, maar ook in rust en duidelijkheid in je marketing.</p>
+                      </article>
+                    ))}
+                  </div>
+                </div>
+                <div className="service-tier-section">
+                  <article className="service-cta-panel">
+                    <span className="eyebrow on-dark">Maak kennis</span>
+                    <h2>
+                      <span className="hero-line-plain">Klaar om dit</span>
+                      <span className="hero-line-accent">op te lossen?</span>
+                    </h2>
+                    <p>Als je lijst groeit maar je omzet stilvalt, is het tijd om daar een systeem van te maken dat wel werkt.</p>
+                    <div className="actions">
+                      <a className="btn btn-on-dark" href="https://calendar.google.com/calendar/appointments/schedules/AcZssZ1SPBgmZQ1XSYWQRkGAxUaSpRVhIIaFPBxq1EmTwHjVCdk_vOJT3Lloz3YUtpWrLd0rG-HTEPMS">Plan een gesprek →</a>
+                      <a className="btn btn-on-dark btn-secondary" href="mailto:info@aichecked.nl">Stuur een bericht</a>
+                    </div>
+                  </article>
+                </div>
+              </div>
+            </section>
+            <CalendarBookingBlock eyebrow="START MET E-MAIL MARKETING" />
+            <SharedFooter />
+          </>
+        );
+      }
+
+      ReactDOM.createRoot(document.getElementById("root")).render(<Page />);
+    </script>
+  </body>
+</html>
